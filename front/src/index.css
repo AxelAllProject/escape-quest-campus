@@ -65,3 +65,21 @@ body {
   outline: 3px solid var(--action);
   outline-offset: 3px;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+@keyframes clignote {
+  to { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

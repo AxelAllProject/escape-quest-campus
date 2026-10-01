@@ -1,230 +1,361 @@
 .accueil {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
   max-width: 1160px;
   margin: 0 auto;
-  padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2.5rem);
-}
-
-/* Bloc récit */
-.incident {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0 0 1.5rem;
-  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
-  border: 1px solid var(--alarme-trait);
-  border-radius: 999px;
-  background: var(--alarme-fond);
-  color: var(--alarme);
-  font-family: var(--police-titre);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.incident__voyant {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--alarme);
-  box-shadow: 0 0 0 4px var(--alarme-fond);
-  animation: clignote 1.1s steps(2, jump-none) infinite;
-}
-
-.accueil h1 {
-  margin: 0;
-  font-family: var(--police-titre);
-  font-weight: 600;
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
-  color: var(--givre);
-}
-
-.accueil__lead {
-  max-width: 34rem;
-  margin: 1.5rem 0 0;
-  font-size: 1.2rem;
-  line-height: 1.55;
-  color: var(--givre);
-}
-
-.accueil__role {
-  max-width: 34rem;
-  margin: 1rem 0 0;
-  color: var(--acier);
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .accueil h2 {
-  margin: 2.75rem 0 1rem;
+  margin: 0 0 1.75rem;
   font-family: var(--police-titre);
   font-weight: 600;
-  font-size: 1.35rem;
-  color: var(--givre);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  line-height: 1.1;
 }
 
-.verrous {
-  display: grid;
-  gap: 0.25rem;
+.accueil h3 {
   margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.18fr);
+  gap: clamp(2rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(3rem, 7vw, 5rem);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 6.5vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.hero__lead {
+  max-width: 32rem;
+  margin: 1.5rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--acier);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  margin-top: 2rem;
+}
+
+.bouton-secondaire {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  color: var(--givre);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+
+.bouton-secondaire:hover {
+  border-color: var(--acier);
+}
+
+.bouton-secondaire:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 3px;
+}
+
+.hero__faits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--acier);
+  font-size: 0.95rem;
+}
+
+.hero__faits li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__faits li::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 2px;
+  background: var(--action);
+}
+
+/* Illustration réseau */
+.reseau {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.reseau__onde { fill: none; stroke: var(--trait); stroke-dasharray: 2 6; }
+.reseau__lien { stroke-width: 2; }
+.reseau__lien.is-ok { stroke: var(--action); stroke-dasharray: 5 7; animation: flux 1.2s linear infinite; }
+.reseau__lien.is-coupe { stroke: var(--alarme); stroke-dasharray: 3 9; opacity: 0.6; }
+.reseau__lien.is-alerte { stroke: var(--alarme); }
+.reseau__attaque { fill: none; stroke: var(--alarme); stroke-width: 2; stroke-dasharray: 6 6; animation: flux 0.9s linear infinite; }
+
+.reseau__noeud rect { fill: var(--facade); stroke: var(--trait-fort); stroke-width: 1.2; }
+.reseau__noeud.is-alerte rect { stroke: var(--alarme); }
+.reseau__nom { font-family: var(--police-titre); font-weight: 600; font-size: 16px; fill: var(--givre); }
+.reseau__statut { font-family: var(--police-texte); font-size: 12.5px; fill: var(--alarme); }
+.reseau__noeud.is-ok .reseau__statut { fill: var(--retabli); }
+
+.reseau__intrus rect { fill: var(--alarme-fond); stroke: var(--alarme); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.reseau__ip { font-family: var(--police-code); font-size: 11px; fill: var(--alarme); }
+
+.reseau__coeur { fill: var(--baie); stroke: var(--alarme); stroke-width: 2; }
+.reseau__pulse {
+  fill: none;
+  stroke: var(--alarme);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.4s ease-out infinite;
+}
+.reseau__ent-nom { font-family: var(--police-titre); font-weight: 700; font-size: 26px; fill: var(--givre); }
+.reseau__ent-statut { font-family: var(--police-texte); font-size: 12px; fill: var(--alarme); }
+
+/* Missions */
+.missions {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--trait);
+}
+
+.mission__statut {
+  margin: 0 0 0.6rem;
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  color: var(--acier);
+}
+
+.mission__statut.is-ouverte {
+  color: var(--retabli);
+}
+
+.mission-phare {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  overflow: hidden;
+  border: 1px solid var(--trait-fort);
+  border-radius: 14px;
+  background: var(--baie);
+}
+
+.mission-phare__illu {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: var(--ecran);
+  border-right: 1px solid var(--trait);
+}
+
+.mission-phare__contenu {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.mission-phare h3 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.mission-phare p {
+  max-width: 34rem;
+  color: var(--acier);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1.75rem;
   padding: 0;
   list-style: none;
 }
 
-.verrou {
-  display: grid;
-  grid-template-columns: 2.25rem 1fr;
-  gap: 1rem;
-  align-items: start;
-  padding: 0.85rem 0;
-  border-top: 1px solid var(--trait);
-}
-
-.verrou:last-child {
-  border-bottom: 1px solid var(--trait);
-}
-
-.verrou__num {
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1.5px solid var(--alarme);
-  border-radius: 6px;
-  color: var(--alarme);
-  font-family: var(--police-titre);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.verrou h3 {
-  margin: 0.1rem 0 0.15rem;
-  font-family: var(--police-titre);
-  font-weight: 600;
-  font-size: 1.1rem;
+.tags li {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 999px;
+  font-size: 0.85rem;
   color: var(--givre);
 }
 
-.verrou p {
-  margin: 0;
+.missions__a-venir {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.mission-verrouillee {
+  padding: 1.25rem 1.5rem 1.5rem;
+  border: 1px dashed var(--trait-fort);
+  border-radius: 10px;
+}
+
+.mission-verrouillee__illu {
+  margin: 0 -0.5rem 1rem;
+  opacity: 0.7;
+}
+
+.mission-verrouillee h3 {
+  font-size: 1.25rem;
   color: var(--acier);
 }
 
-.accueil__action {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.5rem;
-  margin-top: 2.25rem;
-}
-
-.accueil__note {
-  margin: 0;
+.mission-verrouillee p:last-child {
+  margin: 0.5rem 0 0;
   color: var(--acier);
   font-size: 0.95rem;
 }
 
-/* Salle serveur */
-.accueil__salle {
+/* Illustrations des missions */
+.illu { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
+.mission-phare .illu { max-width: 420px; }
+.illu__chassis { fill: var(--baie); stroke: var(--trait-fort); }
+.illu__unite { fill: var(--facade); stroke: var(--trait-fort); }
+.illu__voyant { fill: var(--alarme); animation: clignote 1.1s steps(2, jump-none) infinite; }
+.illu__barre { fill: var(--trait-fort); }
+.illu__grille { stroke: var(--trait-fort); stroke-width: 2; stroke-linecap: round; }
+.illu__badge { fill: var(--alarme-fond); stroke: var(--alarme); }
+.illu__badge-texte { font-family: var(--police-code); font-size: 13px; fill: var(--alarme); }
+.illu__onde { fill: none; stroke: var(--acier); stroke-width: 3; stroke-linecap: round; }
+.illu__onde.is-fantome { stroke-dasharray: 4 6; }
+.illu__point { fill: var(--acier); }
+.illu__point.is-fantome { fill: none; stroke: var(--acier); stroke-width: 2; }
+.illu__legende { font-family: var(--police-code); font-size: 11px; fill: var(--acier); }
+.illu__fichier { fill: var(--facade); stroke: var(--trait-fort); }
+.illu__pli { fill: none; stroke: var(--trait-fort); }
+.illu__anse { fill: none; stroke: var(--acier); stroke-width: 4; stroke-linecap: round; }
+.illu__cadenas { fill: var(--acier); }
+.illu__trou { fill: var(--baie); }
+
+/* Comment jouer */
+.comment-jouer {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--trait);
+}
+
+.etapes {
   display: grid;
-  gap: 1.5rem;
-  justify-items: center;
-}
-
-.rack {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-}
-
-.rack__chassis { fill: var(--baie); stroke: var(--trait-fort); stroke-width: 1.5; }
-.rack__rail { fill: var(--baie-profond); }
-.rack__trou { fill: var(--nuit); }
-.rack__ecran { fill: var(--ecran); stroke: var(--trait-fort); }
-.rack__minuteur { font-family: var(--police-titre); font-weight: 700; font-size: 34px; fill: var(--alarme); letter-spacing: 0.04em; }
-.rack__legende { font-family: var(--police-texte); font-size: 10px; fill: var(--acier); }
-.rack__facade { fill: var(--facade); stroke: var(--trait-fort); }
-.rack__vide { fill: var(--baie-profond); stroke: var(--trait); }
-.rack__grille { stroke: var(--trait-fort); stroke-width: 2; stroke-linecap: round; }
-.rack__nom { font-family: var(--police-titre); font-weight: 600; font-size: 16px; fill: var(--givre); }
-.rack__statut { font-family: var(--police-texte); font-size: 11px; fill: var(--alarme); }
-.rack__cadenas { color: var(--acier); }
-
-.rack__voyant {
-  fill: var(--alarme);
-  animation: clignote 1.1s steps(2, jump-none) infinite;
-}
-
-.rack__module.is-retabli .rack__voyant { fill: var(--retabli); animation: none; }
-.rack__module.is-retabli .rack__statut { fill: var(--retabli); }
-.rack__module.is-retabli .rack__cadenas { color: var(--retabli); }
-
-/* Journal de supervision */
-.journal {
-  width: 100%;
-  max-width: 460px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
   margin: 0;
-  padding: 1rem 1.1rem;
+  padding: 0;
   list-style: none;
-  border: 1px solid var(--trait);
-  border-radius: 8px;
-  background: var(--ecran);
-  font-family: var(--police-code);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  counter-reset: none;
 }
 
-.journal__ligne {
+.etape {
+  position: relative;
+  padding-top: 3.25rem;
+}
+
+.etape::before {
+  content: '';
+  position: absolute;
+  top: 1.1rem;
+  left: 2.75rem;
+  right: -2rem;
+  height: 1px;
+  background: var(--trait-fort);
+}
+
+.etape:last-child::before {
+  display: none;
+}
+
+.etape__num {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: grid;
-  grid-template-columns: auto 3.6rem 1fr;
-  gap: 0.75rem;
-  padding: 0.2rem 0;
-  opacity: 0;
-  animation: apparait 0.25s ease-out forwards;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid var(--action);
+  border-radius: 6px;
+  color: var(--action);
+  font-family: var(--police-titre);
+  font-weight: 700;
 }
 
-.journal__heure { color: var(--acier); }
-.journal__niveau.is-alerte { color: var(--alarme); }
-.journal__niveau.is-warn { color: var(--ambre); }
-.journal__niveau.is-info { color: var(--action); }
-.journal__message { color: var(--givre); }
-
-@keyframes clignote {
-  to { opacity: 0.25; }
+.etape h3 {
+  font-size: 1.2rem;
 }
 
-@keyframes apparait {
-  to { opacity: 1; }
+.etape p {
+  margin: 0.4rem 0 0;
+  color: var(--acier);
 }
 
-@media (max-width: 860px) {
-  .accueil {
+.pied {
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--trait);
+  color: var(--acier);
+  font-size: 0.9rem;
+}
+
+.pied p {
+  margin: 0;
+}
+
+@keyframes flux {
+  to { stroke-dashoffset: -24; }
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(1.45); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .mission-phare {
     grid-template-columns: 1fr;
   }
 
-  .rack {
-    max-width: 280px;
+  .mission-phare__illu {
+    border-right: none;
+    border-bottom: 1px solid var(--trait);
+  }
+}
+
+@media (max-width: 680px) {
+  .missions__a-venir,
+  .etapes {
+    grid-template-columns: 1fr;
   }
 
-  .journal__ligne {
-    grid-template-columns: auto 1fr;
-  }
-
-  .journal__message {
-    grid-column: 1 / -1;
+  .etape::before {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .incident__voyant,
-  .rack__voyant {
-    animation: none;
-  }
-
-  .journal__ligne {
-    opacity: 1;
+  .reseau__lien.is-ok,
+  .reseau__attaque,
+  .reseau__pulse,
+  .illu__voyant {
     animation: none;
   }
 }

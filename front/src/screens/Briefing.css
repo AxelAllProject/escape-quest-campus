@@ -1,0 +1,226 @@
+.briefing {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Bloc récit */
+.incident {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid var(--alarme-trait);
+  border-radius: 999px;
+  background: var(--alarme-fond);
+  color: var(--alarme);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.incident__voyant {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--alarme);
+  box-shadow: 0 0 0 4px var(--alarme-fond);
+  animation: clignote 1.1s steps(2, jump-none) infinite;
+}
+
+.briefing h1 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--givre);
+}
+
+.briefing__lead {
+  max-width: 34rem;
+  margin: 1.5rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--givre);
+}
+
+.briefing__role {
+  max-width: 34rem;
+  margin: 1rem 0 0;
+  color: var(--acier);
+}
+
+.briefing h2 {
+  margin: 2.75rem 0 1rem;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--givre);
+}
+
+.verrous {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verrou {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--trait);
+}
+
+.verrou:last-child {
+  border-bottom: 1px solid var(--trait);
+}
+
+.verrou__num {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid var(--alarme);
+  border-radius: 6px;
+  color: var(--alarme);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.verrou h3 {
+  margin: 0.1rem 0 0.15rem;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--givre);
+}
+
+.verrou p {
+  margin: 0;
+  color: var(--acier);
+}
+
+.briefing__action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 2.25rem;
+}
+
+.briefing__note {
+  margin: 0;
+  color: var(--acier);
+  font-size: 0.95rem;
+}
+
+/* Salle serveur */
+.briefing__salle {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.rack {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+}
+
+.rack__chassis { fill: var(--baie); stroke: var(--trait-fort); stroke-width: 1.5; }
+.rack__rail { fill: var(--baie-profond); }
+.rack__trou { fill: var(--nuit); }
+.rack__ecran { fill: var(--ecran); stroke: var(--trait-fort); }
+.rack__minuteur { font-family: var(--police-titre); font-weight: 700; font-size: 34px; fill: var(--alarme); letter-spacing: 0.04em; }
+.rack__legende { font-family: var(--police-texte); font-size: 10px; fill: var(--acier); }
+.rack__facade { fill: var(--facade); stroke: var(--trait-fort); }
+.rack__vide { fill: var(--baie-profond); stroke: var(--trait); }
+.rack__grille { stroke: var(--trait-fort); stroke-width: 2; stroke-linecap: round; }
+.rack__nom { font-family: var(--police-titre); font-weight: 600; font-size: 16px; fill: var(--givre); }
+.rack__statut { font-family: var(--police-texte); font-size: 11px; fill: var(--alarme); }
+.rack__cadenas { color: var(--acier); }
+
+.rack__voyant {
+  fill: var(--alarme);
+  animation: clignote 1.1s steps(2, jump-none) infinite;
+}
+
+.rack__module.is-retabli .rack__voyant { fill: var(--retabli); animation: none; }
+.rack__module.is-retabli .rack__statut { fill: var(--retabli); }
+.rack__module.is-retabli .rack__cadenas { color: var(--retabli); }
+
+/* Journal de supervision */
+.journal {
+  width: 100%;
+  max-width: 460px;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  list-style: none;
+  border: 1px solid var(--trait);
+  border-radius: 8px;
+  background: var(--ecran);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.journal__ligne {
+  display: grid;
+  grid-template-columns: auto 3.6rem 1fr;
+  gap: 0.75rem;
+  padding: 0.2rem 0;
+  opacity: 0;
+  animation: apparait 0.25s ease-out forwards;
+}
+
+.journal__heure { color: var(--acier); }
+.journal__niveau.is-alerte { color: var(--alarme); }
+.journal__niveau.is-warn { color: var(--ambre); }
+.journal__niveau.is-info { color: var(--action); }
+.journal__message { color: var(--givre); }
+
+@keyframes apparait {
+  to { opacity: 1; }
+}
+
+@media (max-width: 860px) {
+  .briefing {
+    grid-template-columns: 1fr;
+  }
+
+  .rack {
+    max-width: 280px;
+  }
+
+  .journal__ligne {
+    grid-template-columns: auto 1fr;
+  }
+
+  .journal__message {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incident__voyant,
+  .rack__voyant {
+    animation: none;
+  }
+
+  .journal__ligne {
+    opacity: 1;
+    animation: none;
+  }
+}
