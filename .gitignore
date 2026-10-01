@@ -1,0 +1,18 @@
+# --- API Symfony ---
+/api/vendor/
+/api/var/
+/api/.env.local
+/api/.env.local.php
+/api/.env.*.local
+/api/public/bundles/
+
+# --- Front React ---
+/front/node_modules/
+/front/dist/
+/front/.env.local
+
+# --- Éditeurs / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
