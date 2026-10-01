@@ -1,31 +1,31 @@
 # API Symfony
 
-> ⚠️ Dossier à initialiser en H1 (story US-14 « squelette »), sur la branche `feature/US-14-squelette`.
+Versions : PHP 8.3 (minimum 8.2), Symfony **7.4 LTS**, Composer 2.
 
-## Initialisation (une seule fois)
-
-Depuis la racine du dépôt :
+## Première installation
 
 ```bash
-rm api/README.md        # Composer a besoin d'un dossier vide
-composer create-project symfony/skeleton:"7.*" api
-cd api
-composer require symfony/monolog-bundle
+composer install
 ```
 
-Symfony 7 nécessite **PHP 8.2 minimum**.
+La première fois, Symfony Flex génère automatiquement les fichiers du framework
+(`bin/console`, `config/`, `public/index.php`, `src/Kernel.php`, `.env`, `symfony.lock`, `composer.lock`).
+**Ils doivent être commités.**
 
-## Organisation prévue
+## Lancer en local
 
-- `src/Controller/ChallengeController.php` : les endpoints du jeu
-- `config/challenges.yaml` (ou équivalent) : énoncés, indices et réponses des épreuves — **côté serveur uniquement**
-- Logs : canal Monolog dédié `game` (une ligne par tentative : épreuve, résultat, IP)
+```bash
+symfony server:start          # ou : php -S localhost:8000 -t public
+```
 
-## Contrat d'API (à valider en H1 avec le front)
+Vérifier : http://localhost:8000/api/health → `{"status":"ok"}`
+
+## Endpoints
 
 | Méthode | Route | Rôle |
 |---|---|---|
-| `GET` | `/api/challenges/{id}` | Énoncé + indice de l'épreuve |
-| `POST` | `/api/challenges/{id}/answer` | Vérifie la réponse → `{ "correct": true/false }` |
+| `GET` | `/api/health` | L'API répond |
+| `GET` | `/api/challenges/{id}` | Énoncé + indice d'une épreuve (endpoint modèle) |
+| `POST` | `/api/challenges/{id}/answer` | Vérifie la réponse → `{ "correct": true/false }` *(à venir)* |
 
-Toutes les routes commencent par `/api` (c'est ce préfixe que Nginx redirige vers Symfony).
+Toutes les routes commencent par `/api` (préfixe redirigé vers Symfony par Nginx et par le proxy Vite).

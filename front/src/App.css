@@ -1,0 +1,13 @@
+.app {
+  max-width: 720px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.ok {
+  color: #3b6d11;
+}
+
+.erreur {
+  color: #a32d2d;
+}
