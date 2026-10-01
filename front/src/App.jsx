@@ -7,9 +7,9 @@ export default function App() {
   const [ecran, setEcran] = useState('accueil')
 
   return (
-    <main className="app">
+    <main>
       {ecran === 'accueil' && <Accueil onStart={() => setEcran('epreuve1')} />}
-      {ecran === 'epreuve1' && <p>Épreuve 1 : à venir (US-2)</p>}
+      {ecran === 'epreuve1' && <p className="ecran-attente">Épreuve 1 : à venir (US-2)</p>}
     </main>
   )
 }

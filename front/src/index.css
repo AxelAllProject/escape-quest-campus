@@ -1,10 +1,67 @@
 :root {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Salle serveur, nuit d'astreinte */
+  --nuit: #0e1a2b;
+  --baie: #17263b;
+  --baie-profond: #12203a;
+  --facade: #1d3049;
+  --ecran: #0a1422;
+  --givre: #e8eef6;
+  --acier: #93a7c0;
+  --trait: #22344d;
+  --trait-fort: #2f4562;
+
+  --alarme: #f2474e;
+  --alarme-fond: rgba(242, 71, 78, 0.12);
+  --alarme-trait: rgba(242, 71, 78, 0.45);
+  --ambre: #ffb547;
+  --action: #3dd6f5;
+  --action-clair: #8be8fa;
+  --retabli: #45d98a;
+
+  --police-titre: 'Chakra Petch', 'Segoe UI', sans-serif;
+  --police-texte: 'IBM Plex Sans', system-ui, sans-serif;
+  --police-code: 'IBM Plex Mono', ui-monospace, monospace;
+
+  color-scheme: dark;
+  font-family: var(--police-texte);
+  font-size: 1.0625rem;
   line-height: 1.6;
-  color: #1f2328;
-  background: #ffffff;
+  color: var(--givre);
+  background-color: var(--nuit);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  /* Dalles de faux-plancher du datacenter */
+  background-image:
+    linear-gradient(rgba(147, 167, 192, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 167, 192, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.bouton {
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--action);
+  color: var(--nuit);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.bouton:hover {
+  background: var(--action-clair);
+}
+
+.bouton:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 3px;
 }
