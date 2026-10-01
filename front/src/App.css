@@ -4,10 +4,26 @@
   padding: 0 1rem;
 }
 
-.ok {
-  color: #3b6d11;
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: #fdecea;
+  color: #a32d2d;
+  font-weight: 600;
 }
 
-.erreur {
-  color: #a32d2d;
+button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  border: none;
+  border-radius: 8px;
+  background: #185fa5;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0c447c;
 }

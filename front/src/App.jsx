@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import Accueil from './screens/Accueil'
 import './App.css'
 
+// Navigation entre les écrans du jeu (pas besoin de routeur pour 5 écrans).
 export default function App() {
-  const [api, setApi] = useState({ etat: 'chargement' })
-
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((data) => setApi({ etat: 'ok', data }))
-      .catch(() => setApi({ etat: 'erreur' }))
-  }, [])
+  const [ecran, setEcran] = useState('accueil')
 
   return (
     <main className="app">
-      <h1>Escape Quest Campus</h1>
-      <p>Squelette React + Symfony.</p>
-      {api.etat === 'chargement' && <p>Connexion à l'API…</p>}
-      {api.etat === 'ok' && <p className="ok">API connectée : {api.data.status}</p>}
-      {api.etat === 'erreur' && (
-        <p className="erreur">API injoignable : lance Symfony sur le port 8000.</p>
-      )}
+      {ecran === 'accueil' && <Accueil onStart={() => setEcran('epreuve1')} />}
+      {ecran === 'epreuve1' && <p>Épreuve 1 : à venir (US-2)</p>}
     </main>
   )
 }
