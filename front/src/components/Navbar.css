@@ -1,0 +1,97 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--trait);
+  background: rgba(14, 26, 43, 0.86);
+  backdrop-filter: blur(10px);
+}
+
+.navbar__interieur {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+}
+
+.navbar button {
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.navbar button:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.navbar .navbar__marque {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--givre);
+}
+
+.navbar__liens {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.navbar__liens button {
+  padding: 0.25rem 0;
+  color: var(--acier);
+  font-size: 0.98rem;
+}
+
+.navbar__liens button:hover {
+  color: var(--givre);
+}
+
+.navbar__etat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0 auto;
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  color: var(--ambre);
+}
+
+.navbar__voyant {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--ambre);
+  animation: clignote 1.4s steps(2, jump-none) infinite;
+}
+
+.logo__fond { fill: var(--baie); stroke: var(--trait-fort); }
+.logo__unite { fill: var(--acier); }
+.logo__voyant { fill: var(--alarme); }
+
+@media (max-width: 760px) {
+  .navbar__liens {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__etat {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__voyant {
+    animation: none;
+  }
+}
