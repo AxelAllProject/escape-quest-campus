@@ -17,14 +17,14 @@ const EPREUVES = [
   },
   {
     module: 'Réseau',
-    titre: 'Les services coupés',
-    action: 'Remets chaque service (web, SSH, DNS…) sur le bon port.',
-    competence: 'Ports réseau',
+    titre: 'Le réseau à rebrancher',
+    action: 'Rebranche 6 services sur leurs ports, puis referme le pare-feu, porte dérobée comprise.',
+    competence: 'Ports et pare-feu',
   },
   {
     module: 'Journaux',
-    titre: "Les traces de l'intrus",
-    action: "Fouille les logs du serveur pour trouver la clé secrète de l'intrus.",
+    titre: "L'enquête dans les journaux",
+    action: "Recoupe 3 journaux du serveur pour monter le dossier de l'intrus : IP, compte, heure, accès cachés.",
     competence: 'Analyse de logs',
   },
 ]

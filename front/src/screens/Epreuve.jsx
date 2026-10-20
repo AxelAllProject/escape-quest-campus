@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { chargerEpreuve, chargerIndice, envoyerReponse } from '../api'
 import Datacenter3D from '../components/Datacenter3D'
-import Logs from '../components/epreuves/Logs'
+import Enquete from '../components/epreuves/Enquete'
 import Phishing from '../components/epreuves/Phishing'
-import Ports from '../components/epreuves/Ports'
+import Reseau from '../components/epreuves/Reseau'
 import { formaterDuree, scoreEpreuves, secondesRestantes, serie } from '../game/partie'
 import './Epreuve.css'
 
 const COMPOSANTS = {
   phishing: Phishing,
-  ports: Ports,
-  logs: Logs,
+  reseau: Reseau,
+  enquete: Enquete,
 }
 
 const MODULES = { messagerie: 'messagerie', reseau: 'réseau', journaux: 'journaux' }
@@ -55,7 +55,8 @@ export default function Epreuve({
       setRetour(resultat)
       if (resultat.correct) {
         onReussite()
-      } else {
+      } else if (!resultat.partial) {
+        // « partial » : réponse incomplète mais sans erreur (enquête), donc pas de pénalité.
         onErreur()
         secouer()
       }
@@ -132,14 +133,14 @@ export default function Epreuve({
             <p className="epreuve__consigne">{epreuve.instructions}</p>
 
             <div ref={jeu} className="epreuve__jeu">
-              <Composant epreuve={epreuve} onValider={valider} envoi={envoi} verrouille={reussie} />
+              <Composant epreuve={epreuve} onValider={valider} envoi={envoi} verrouille={reussie} retour={retour} />
             </div>
 
             <div className="epreuve__retour" aria-live="polite">
               {retour && !reussie && (
-                <p className="retour is-erreur">
+                <p className={`retour ${retour.partial ? 'is-piste' : 'is-erreur'}`}>
                   <span>{retour.message}</span>
-                  {!retour.reseau && <span className="retour__penalite">−25 pts</span>}
+                  {!retour.reseau && !retour.partial && <span className="retour__penalite">−25 pts</span>}
                 </p>
               )}
               {reussie && (

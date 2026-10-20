@@ -77,6 +77,12 @@ Puis ouvrir **http://localhost:5173**. Le front redirige `/api` vers `localhost:
 
 Les épreuves et leurs solutions sont dans `api/src/Game/Challenges.php`.
 
+| Épreuve | Format de `answer` | Retour en plus de `correct` / `message` |
+|---|---|---|
+| 1 · Mail piégé | `["expediteur", "lien", …]` (éléments signalés) | — |
+| 2 · Réseau | `{"ports": {"http": 80, …}, "firewall": {"http": "ouvert", "porte": "bloque", …}}` | `fields` (service → bien branché ?), `firewall` (nombre de règles justes) |
+| 3 · Enquête | `{"ip": "…", "compte": "…", "heure": "HH:MM:SS", "persistance": "…", "cle": "…"}` (fiches remplies) | `fields` (fiche → juste ?), `partial` (pistes justes mais dossier incomplet : pas de pénalité) |
+
 ## Accès depuis un autre poste
 
 `http://IP-DE-LA-VM/` — à compléter par l'équipe réseau.

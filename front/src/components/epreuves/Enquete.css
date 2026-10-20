@@ -1,0 +1,286 @@
+.enquete {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.enquete__onglets {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--trait);
+  background: var(--nuit);
+}
+
+.enquete__onglet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-right: 1px solid var(--trait);
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.enquete__onglet.is-actif {
+  border-bottom-color: var(--action);
+  background: var(--ecran);
+  color: var(--givre);
+}
+
+.enquete__onglet:focus-visible,
+.jeton:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: -2px;
+}
+
+.enquete__badge {
+  min-width: 1.4rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: rgba(242, 71, 78, 0.18);
+  color: #ff8a8f;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.enquete__badge.is-filtre {
+  background: rgba(255, 181, 71, 0.18);
+  color: var(--ambre);
+}
+
+.enquete__journaux .terminal__lignes .is-danger {
+  color: #ff5d64;
+  background: rgba(242, 71, 78, 0.08);
+}
+
+/* Indices cliquables dans les journaux */
+.jeton {
+  padding: 0 0.15rem;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.jeton:hover:not(:disabled) {
+  background: rgba(61, 214, 245, 0.18);
+  color: var(--givre);
+}
+
+.jeton.is-epingle {
+  border-bottom-style: solid;
+  background: rgba(255, 181, 71, 0.16);
+  color: var(--ambre);
+}
+
+.jeton:disabled {
+  cursor: default;
+}
+
+/* Dossier de l'intrus */
+.dossier {
+  padding: 1.1rem;
+  border: 1px solid rgba(255, 181, 71, 0.35);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 181, 71, 0.06), transparent 50%),
+    var(--baie);
+}
+
+.dossier__tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.dossier__titre {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dossier__jauge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dossier__cran {
+  width: 1.4rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--trait-fort);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.dossier__cran.is-ok {
+  background: var(--retabli);
+  box-shadow: 0 0 8px rgba(69, 217, 138, 0.6);
+}
+
+.dossier__score {
+  margin-left: 0.5rem;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+}
+
+.dossier__aide {
+  margin: 0.4rem 0 1rem;
+  color: var(--acier);
+  font-size: 0.9rem;
+}
+
+.fiches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fiche {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  background: var(--ecran);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.fiche.is-active {
+  border-color: var(--action);
+  box-shadow: 0 0 0 3px rgba(61, 214, 245, 0.15);
+  transform: translateY(-2px);
+}
+
+.fiche__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--givre);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.fiche__num {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  color: var(--acier);
+  font-size: 0.8rem;
+}
+
+.fiche__valeur {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  background: var(--nuit);
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.95rem;
+}
+
+.fiche__valeur:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.fiche.is-ok {
+  border-color: var(--retabli);
+}
+
+.fiche.is-ok .fiche__num {
+  border-color: var(--retabli);
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.fiche.is-ko {
+  border-color: var(--alarme);
+}
+
+/* Tampon posé sur la fiche après vérification */
+.fiche__tampon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  animation: tampon 0.35s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+.fiche.is-ok .fiche__tampon {
+  color: var(--retabli);
+}
+
+.fiche.is-ko .fiche__tampon {
+  color: var(--alarme);
+}
+
+@keyframes tampon {
+  from { opacity: 0; transform: rotate(-8deg) scale(2.2); }
+}
+
+.dossier__bulle {
+  min-height: 1.4em;
+  margin: 0.75rem 0 0;
+  color: var(--ambre);
+  font-size: 0.9rem;
+}
+
+.dossier__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.dossier__actions p {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--acier);
+  font-size: 0.88rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fiche,
+  .fiche__tampon {
+    animation: none;
+    transition: none;
+  }
+}

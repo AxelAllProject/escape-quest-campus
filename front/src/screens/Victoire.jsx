@@ -8,10 +8,10 @@ const ATTAQUE = [
   { heure: '07:53', texte: "Un agent ouvre Emploi_du_temps_S2.pdf.exe : l'attaquant a un pied dans le réseau." },
   { heure: '08:00', texte: '185.220.101.4 devine le mot de passe admin en SSH, après 3 échecs en rafale.' },
   { heure: '08:01', texte: "L'intrus crée un compte « maintenance » et la clé de récupération X9-4TQZ." },
-  { heure: '08:02', texte: "Il coupe le web, le DNS et SSH : l'ENT tombe." },
+  { heure: '08:02', texte: "Il coupe le web, le DNS et SSH, puis ouvre une porte dérobée sur le port 4444 : l'ENT tombe." },
 ]
 
-const RIPOSTE = ['Mail piégé démasqué', 'Services relancés sur leurs ports', "Clé de l'intrus révoquée"]
+const RIPOSTE = ['Mail piégé démasqué', 'Réseau rebranché, porte 4444 murée', "Dossier de l'intrus bouclé, accès révoqués"]
 
 const REFLEXES = [
   {
@@ -19,12 +19,12 @@ const REFLEXES = [
     texte: "Vérifie le domaine de l'expéditeur, survole le lien, et méfie-toi des doubles extensions comme .pdf.exe.",
   },
   {
-    titre: 'Les ports à connaître',
-    texte: '22 pour SSH, 53 pour DNS, 80 pour HTTP, 443 pour HTTPS. Un port inattendu ouvert est un signal d’alerte.',
+    titre: 'Ports et pare-feu',
+    texte: '22 SSH, 25 SMTP, 53 DNS, 80 et 443 web, 3306 MySQL. N’ouvre sur Internet que ce que le public doit joindre, et un port inconnu se ferme.',
   },
   {
     titre: 'Lire les journaux',
-    texte: 'Des échecs de connexion en rafale suivis d’une réussite depuis la même IP, c’est une attaque par force brute.',
+    texte: 'Des échecs en rafale puis une réussite depuis la même IP, suivis d’un compte créé : force brute et accès caché. Recoupe toujours plusieurs journaux.',
   },
 ]
 

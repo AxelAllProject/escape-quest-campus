@@ -31,3 +31,9 @@ Vérifier : http://localhost:8000/api/health → `{"status":"ok"}`
 
 Toutes les routes commencent par `/api` (préfixe redirigé vers Symfony par Nginx et par le proxy Vite).
 Contenu et solutions des épreuves : `src/Game/Challenges.php`.
+
+| Épreuve | Format de `answer` | Retour en plus de `correct` / `message` |
+|---|---|---|
+| 1 · Mail piégé | `["expediteur", "lien", …]` (éléments signalés) | — |
+| 2 · Réseau | `{"ports": {"http": 80, …}, "firewall": {"http": "ouvert", "porte": "bloque", …}}` | `fields` (service → bien branché ?), `firewall` (nombre de règles justes) |
+| 3 · Enquête | `{"ip": "…", "compte": "…", "heure": "HH:MM:SS", "persistance": "…", "cle": "…"}` (fiches remplies) | `fields` (fiche → juste ?), `partial` (pistes justes mais dossier incomplet : pas de pénalité) |

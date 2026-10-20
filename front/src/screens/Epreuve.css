@@ -106,6 +106,12 @@
   color: #ff9a9e;
 }
 
+.retour.is-piste {
+  border-left-color: var(--retabli);
+  background: rgba(69, 217, 138, 0.08);
+  color: var(--retabli);
+}
+
 .retour__penalite {
   font-family: var(--police-code);
   font-weight: 600;
