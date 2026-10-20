@@ -26,3 +26,8 @@ export function envoyerReponse(id, answer) {
 export function chargerIndice(id, index) {
   return fetch(`/api/challenges/${id}/hints/${index}`).then(lireJson)
 }
+
+// Épreuve « chasse » : puissance du signal de la borne pirate dans une salle.
+export function mesurerSignal(id, zone) {
+  return fetch(`/api/challenges/${id}/probe/${encodeURIComponent(zone)}`).then(lireJson)
+}

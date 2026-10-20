@@ -1,0 +1,380 @@
+.radar__haut {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.radar__ecran {
+  display: grid;
+  align-content: center;
+  padding: 0.75rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(61, 214, 245, 0.08), transparent 70%),
+    var(--ecran);
+}
+
+.radar__svg {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.radar__cercle {
+  fill: none;
+  stroke: rgba(61, 214, 245, 0.22);
+}
+
+.radar__axe {
+  stroke: rgba(61, 214, 245, 0.12);
+}
+
+.radar__graduation {
+  fill: var(--acier);
+  font-family: var(--police-code);
+  font-size: 8px;
+  opacity: 0.7;
+}
+
+.radar__balayage {
+  transform-box: view-box;
+  transform-origin: 160px 160px;
+  animation: balayage linear infinite;
+  pointer-events: none;
+}
+
+@keyframes balayage {
+  to { transform: rotate(360deg); }
+}
+
+.radar__faisceau {
+  stroke: var(--action);
+  stroke-width: 1.5;
+}
+
+.radar__toi {
+  fill: var(--givre);
+}
+
+.spot {
+  cursor: pointer;
+}
+
+.spot__zone {
+  fill: transparent;
+}
+
+.spot__anneau {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 1.5;
+}
+
+.spot__point {
+  fill: var(--action);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping linear infinite;
+}
+
+@keyframes ping {
+  0% { opacity: 1; transform: scale(1.7); }
+  25% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0.35; transform: scale(1); }
+}
+
+.spot__nom {
+  fill: var(--acier);
+  font-family: var(--police-code);
+  font-size: 9px;
+  pointer-events: none;
+}
+
+.spot:hover .spot__anneau {
+  stroke: rgba(61, 214, 245, 0.5);
+}
+
+.spot.is-choisi .spot__anneau {
+  stroke: var(--action);
+  animation: anneau 1.2s ease-in-out infinite;
+}
+
+.spot.is-choisi .spot__nom {
+  fill: var(--givre);
+}
+
+@keyframes anneau {
+  50% { stroke-opacity: 0.35; }
+}
+
+.spot.is-pirate .spot__point {
+  fill: var(--alarme);
+}
+
+.spot.is-pirate .spot__nom {
+  fill: #ff8a8f;
+}
+
+.spot__croix {
+  stroke: var(--nuit);
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+.radar.is-nettoye .spot.is-pirate .spot__point {
+  fill: var(--acier);
+  animation: none;
+  opacity: 0.5;
+}
+
+.radar.is-nettoye .spot:not(.is-pirate) .spot__point {
+  fill: var(--retabli);
+}
+
+.radar__statut {
+  margin: 0.4rem 0 0;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Inspecteur */
+.radar__inspecteur {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 14px;
+  background: var(--baie);
+}
+
+.radar__inspecteur-titre {
+  margin: 0;
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.radar__ssid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--police-code);
+  font-size: 1.35rem;
+  overflow-wrap: anywhere;
+}
+
+.radar__marque,
+.ligne-reseau__marque {
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  background: var(--alarme);
+  color: var(--nuit);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.radar__fiche {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.radar__fiche div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed var(--trait);
+}
+
+.radar__fiche dt {
+  color: var(--acier);
+  font-size: 0.88rem;
+}
+
+.radar__fiche dd {
+  margin: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.radar__fiche dd.is-code {
+  font-family: var(--police-code);
+}
+
+.barres {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  width: 18px;
+  height: 12px;
+  vertical-align: -1px;
+}
+
+.barres span {
+  flex: 1;
+  border-radius: 1px;
+  background: var(--trait-fort);
+}
+
+.barres span.is-plein {
+  background: var(--action);
+}
+
+.radar__signaler {
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--alarme);
+  border-radius: 8px;
+  background: transparent;
+  color: #ff8a8f;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.radar__signaler:hover:not(:disabled) {
+  background: rgba(242, 71, 78, 0.12);
+}
+
+.radar__signaler.is-actif {
+  background: var(--alarme);
+  color: var(--nuit);
+}
+
+.radar__signaler:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.radar__signaler:focus-visible,
+.ligne-reseau:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.radar__reference ul {
+  margin: 0;
+  padding: 0.75rem 1rem 0.75rem 2rem;
+  color: var(--givre);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* Liste des réseaux */
+.radar__liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ligne-reseau {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.15rem 0.75rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--ecran);
+  color: var(--givre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ligne-reseau__ssid {
+  font-family: var(--police-code);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ligne-reseau__bssid {
+  grid-column: 1;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.78rem;
+}
+
+.ligne-reseau__signal {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.ligne-reseau__nouveau {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--ambre);
+  font-size: 0.72rem;
+}
+
+.ligne-reseau__marque {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+}
+
+.ligne-reseau.is-choisi {
+  border-color: var(--action);
+}
+
+.ligne-reseau.is-pirate {
+  border-color: rgba(242, 71, 78, 0.6);
+  background: rgba(242, 71, 78, 0.07);
+}
+
+.radar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.radar__actions p {
+  margin: 0;
+  color: var(--acier);
+}
+
+.radar__actions strong {
+  color: var(--givre);
+  font-family: var(--police-titre);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 760px) {
+  .radar__haut {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar__balayage {
+    display: none;
+  }
+
+  .spot__point,
+  .spot.is-choisi .spot__anneau {
+    animation: none;
+  }
+}

@@ -1,0 +1,333 @@
+.chasse__tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.chasse__batiment {
+  margin: 0;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+}
+
+.batterie {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.batterie__cellules {
+  position: relative;
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1.5px solid var(--acier);
+  border-radius: 4px;
+}
+
+.batterie__cellules::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 30%;
+  width: 3px;
+  height: 40%;
+  border-radius: 0 2px 2px 0;
+  background: var(--acier);
+}
+
+.batterie__cellules span {
+  width: 12px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--trait);
+}
+
+.batterie__cellules span.is-pleine {
+  background: var(--retabli);
+  box-shadow: 0 0 6px rgba(69, 217, 138, 0.5);
+}
+
+/* Plan de la bibliothèque */
+.plan {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--colonnes), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--lignes), 5.75rem);
+  gap: 6px;
+  padding: 6px;
+  border: 2px solid var(--trait-fort);
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(147, 167, 192, 0.06) 1px, transparent 1px) 0 0 / 18px 18px,
+    linear-gradient(90deg, rgba(147, 167, 192, 0.06) 1px, transparent 1px) 0 0 / 18px 18px,
+    var(--nuit);
+}
+
+.salle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.6rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--chaleur, var(--baie));
+  color: var(--givre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.5s, border-color 0.15s;
+}
+
+.salle:hover:not(:disabled) {
+  border-color: var(--action);
+}
+
+.salle:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.salle:disabled {
+  cursor: default;
+}
+
+.salle__nom {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.salle__mesure {
+  align-self: flex-end;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(14, 26, 43, 0.75);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  animation: mesure 0.4s ease-out;
+}
+
+@keyframes mesure {
+  from { opacity: 0; transform: scale(1.6); }
+}
+
+.salle__vide {
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.salle.is-fouillee {
+  border-style: dashed;
+}
+
+.salle.is-ici {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+/* Le joueur, qui se déplace de salle en salle */
+.pion {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  display: grid;
+  place-items: center;
+  width: calc((100% - 12px - (var(--colonnes) - 1) * 6px) / var(--colonnes));
+  height: calc((100% - 12px - (var(--lignes) - 1) * 6px) / var(--lignes));
+  transform: translate(calc(var(--col) * (100% + 6px)), calc(var(--ligne) * (100% + 6px)));
+  transition: transform 0.45s cubic-bezier(0.3, 1.3, 0.5, 1);
+  pointer-events: none;
+}
+
+.pion__icone {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--action);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(61, 214, 245, 0.7));
+}
+
+.pion__onde {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--action);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.pion__onde.is-active {
+  animation: onde 0.9s ease-out;
+}
+
+@keyframes onde {
+  0% { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(5); }
+}
+
+.pion__trophee {
+  position: absolute;
+  bottom: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background: var(--retabli);
+  color: var(--nuit);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.chasse.is-trouve .pion__icone {
+  stroke: var(--retabli);
+}
+
+.chasse__legende {
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid var(--ambre);
+  background: rgba(255, 181, 71, 0.06);
+  color: var(--givre);
+  font-size: 0.9rem;
+}
+
+.chasse__bas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.chasse__ici {
+  margin: 0 0 0.75rem;
+  color: var(--acier);
+}
+
+.chasse__ici strong {
+  color: var(--givre);
+  font-family: var(--police-titre);
+}
+
+.chasse__boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chasse__message {
+  min-height: 1.2em;
+  margin: 0.5rem 0 0;
+  color: var(--ambre);
+  font-size: 0.9rem;
+}
+
+.carnet {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  background: var(--ecran);
+  font-size: 0.9rem;
+}
+
+.carnet__titre {
+  margin: 0 0 0.5rem;
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.carnet__vide,
+.carnet__regle {
+  margin: 0;
+  color: var(--acier);
+}
+
+.carnet__regle {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+}
+
+.carnet__liste {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carnet__liste li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.carnet__valeur {
+  padding: 0 0.4rem;
+  border-radius: 4px;
+  background: var(--chaleur);
+  font-family: var(--police-code);
+}
+
+@media (max-width: 640px) {
+  .plan {
+    grid-template-rows: repeat(var(--lignes), 5.5rem);
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .salle {
+    padding: 0.4rem;
+  }
+
+  .salle__nom {
+    font-size: 0.72rem;
+  }
+
+  .salle__mesure {
+    font-size: 0.7rem;
+  }
+
+  .pion {
+    left: 4px;
+    top: 4px;
+    width: calc((100% - 8px - (var(--colonnes) - 1) * 4px) / var(--colonnes));
+    height: calc((100% - 8px - (var(--lignes) - 1) * 4px) / var(--lignes));
+    transform: translate(calc(var(--col) * (100% + 4px)), calc(var(--ligne) * (100% + 4px)));
+  }
+
+  .chasse__bas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pion,
+  .salle {
+    transition: none;
+  }
+
+  .pion__onde.is-active,
+  .salle__mesure {
+    animation: none;
+  }
+}

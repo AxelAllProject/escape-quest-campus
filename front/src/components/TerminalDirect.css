@@ -1,0 +1,40 @@
+.terminal-direct {
+  max-width: 30rem;
+  margin-top: 1.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--trait);
+  border-radius: 8px;
+  background: var(--ecran);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.terminal-direct p {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.terminal-direct__invite {
+  color: var(--retabli);
+}
+
+.terminal-direct__curseur {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  background: var(--action);
+  animation: clignote 0.9s steps(2, jump-none) infinite;
+}
+
+.terminal-direct__sortie.is-alerte {
+  color: #ff8a8f;
+}
+
+.terminal-direct__sortie.is-info {
+  color: var(--ambre);
+}

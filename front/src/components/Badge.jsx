@@ -6,6 +6,12 @@ const ICONES = {
       <circle cx="12" cy="12" r="3" />
     </>
   ),
+  'chasseur-ondes': (
+    <>
+      <path d="M4.5 9.5a10.5 10.5 0 0 1 15 0M7.5 12.5a6.3 6.3 0 0 1 9 0M10.5 15.5a2.1 2.1 0 0 1 3 0" />
+      <circle cx="12" cy="19" r="1" />
+    </>
+  ),
   autonome: <path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z" />,
   'sans-faute': <path d="M5 12.5l4.5 4.5L19 7" />,
   'dans-les-temps': (

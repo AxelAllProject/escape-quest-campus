@@ -1,0 +1,583 @@
+/* Étapes de l'intervention */
+.reseau__etapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.reseau__etape {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 999px;
+  background: var(--baie);
+  color: var(--acier);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reseau__etape:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.reseau__etape-num {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--facade);
+  font-size: 0.85rem;
+}
+
+.reseau__etape.is-actuelle {
+  border-color: var(--action);
+  color: var(--givre);
+  box-shadow: 0 0 0 3px rgba(61, 214, 245, 0.15);
+}
+
+.reseau__etape.is-actuelle .reseau__etape-num {
+  background: var(--action);
+  color: var(--nuit);
+}
+
+.reseau__etape.is-faite .reseau__etape-num {
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.reseau__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.reseau__compteur {
+  margin: 0;
+  color: var(--acier);
+}
+
+.reseau__compteur strong {
+  color: var(--givre);
+  font-family: var(--police-titre);
+  font-size: 1.2rem;
+}
+
+/* 1. Brassage */
+.brassage__bac {
+  padding: 1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 12px;
+  background: var(--ecran);
+}
+
+.brassage__titre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.brassage__titre span {
+  color: var(--action);
+  font-family: var(--police-code);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.brassage__cables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cable {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--baie);
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.95rem;
+  cursor: grab;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.cable:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.cable__fiche {
+  width: 0.65rem;
+  height: 0.9rem;
+  border-radius: 2px;
+  background: var(--ambre);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.cable.is-branche {
+  opacity: 0.4;
+}
+
+.cable.is-branche .cable__fiche {
+  background: var(--acier);
+}
+
+.cable.is-en-main {
+  border-color: var(--action);
+  opacity: 1;
+  transform: translateY(-4px) rotate(-3deg);
+  box-shadow: 0 8px 20px rgba(61, 214, 245, 0.3);
+  cursor: grabbing;
+}
+
+.cable.is-en-main .cable__fiche {
+  background: var(--action);
+}
+
+.brassage__prises {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prise {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'led proto port'
+    'nom nom port'
+    'desc desc desc';
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px dashed var(--trait-fort);
+  border-radius: 10px;
+  background: var(--baie);
+  color: var(--givre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.prise.is-cible:not(:disabled) {
+  border-color: var(--action);
+  animation: prise-appel 1.2s ease-in-out infinite;
+}
+
+@keyframes prise-appel {
+  50% { box-shadow: 0 0 0 4px rgba(61, 214, 245, 0.18); }
+}
+
+.prise.is-branchee {
+  border-style: solid;
+}
+
+.prise__led {
+  grid-area: led;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--alarme);
+  animation: clignote 1.1s steps(2, jump-none) infinite;
+}
+
+.prise.is-branchee .prise__led {
+  background: var(--ambre);
+  animation: none;
+}
+
+.prise__protocole {
+  grid-area: proto;
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.prise__nom {
+  grid-area: nom;
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.prise__desc {
+  grid-area: desc;
+  color: var(--acier);
+  font-size: 0.85rem;
+}
+
+.prise__port {
+  grid-area: port;
+  min-width: 4.4rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  background: var(--ecran);
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.prise.is-branchee .prise__port {
+  border-color: var(--ambre);
+  color: var(--ambre);
+}
+
+.prise.is-ok {
+  border-color: var(--retabli);
+}
+
+.prise.is-ok .prise__led {
+  background: var(--retabli);
+}
+
+.prise.is-ok .prise__port {
+  border-color: var(--retabli);
+  color: var(--retabli);
+}
+
+.prise.is-ko {
+  border-color: var(--alarme);
+  background: rgba(242, 71, 78, 0.07);
+}
+
+.prise.is-ko .prise__led {
+  background: var(--alarme);
+  animation: clignote 0.6s steps(2, jump-none) infinite;
+}
+
+.prise.is-ko .prise__port {
+  border-color: var(--alarme);
+  color: var(--alarme);
+}
+
+/* 2. Pare-feu : chaque flux est une piste où circulent des paquets */
+.parefeu__legende {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 0.5rem;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parefeu__legende span:nth-child(2) {
+  text-align: center;
+}
+
+.parefeu__legende span:last-child {
+  text-align: right;
+}
+
+.parefeu__flux {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flux {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  background: var(--ecran);
+}
+
+.flux__piste {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --mur: 58%;
+}
+
+.flux__piste::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px dashed rgba(147, 167, 192, 0.18);
+}
+
+.flux__mur {
+  position: absolute;
+  left: var(--mur);
+  top: 12%;
+  bottom: 12%;
+  width: 6px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(180deg, var(--acier) 0 6px, transparent 6px 10px);
+  opacity: 0.5;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.flux.is-bloque .flux__mur {
+  background: var(--alarme);
+  box-shadow: 0 0 14px rgba(242, 71, 78, 0.6);
+  opacity: 0.9;
+}
+
+.flux.is-ouvert .flux__mur {
+  background: repeating-linear-gradient(180deg, var(--retabli) 0 3px, transparent 3px 12px);
+  opacity: 0.6;
+}
+
+.flux__paquet {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: var(--action);
+  box-shadow: 0 0 8px var(--action);
+  opacity: 0;
+  animation: paquet-arret 2.1s linear infinite;
+}
+
+.flux.is-ouvert .flux__paquet {
+  background: var(--retabli);
+  box-shadow: 0 0 8px var(--retabli);
+  animation-name: paquet-passe;
+}
+
+.flux.is-suspect .flux__paquet {
+  background: var(--alarme);
+  box-shadow: 0 0 8px var(--alarme);
+}
+
+@keyframes paquet-passe {
+  0% { left: 0; opacity: 0; }
+  10%, 85% { opacity: 0.9; }
+  100% { left: calc(100% - 7px); opacity: 0; }
+}
+
+@keyframes paquet-arret {
+  0% { left: 0; opacity: 0; transform: scale(1); }
+  10% { opacity: 0.9; }
+  55% { left: calc(58% - 10px); opacity: 0.9; transform: scale(1); }
+  70%, 100% { left: calc(58% - 10px); opacity: 0; transform: scale(2.4); }
+}
+
+.flux__info {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.flux__protocole {
+  width: fit-content;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  background: var(--baie);
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.75rem;
+}
+
+.flux.is-suspect .flux__protocole {
+  border-color: var(--alarme);
+  color: var(--alarme);
+}
+
+.flux__nom {
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.flux__port {
+  margin-left: 0.4rem;
+  color: var(--ambre);
+  font-family: var(--police-code);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.flux__zone {
+  max-width: 34rem;
+  color: var(--acier);
+  font-size: 0.85rem;
+}
+
+.flux__choix {
+  position: relative;
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--baie);
+}
+
+.flux__bouton {
+  padding: 0.45rem 0.75rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--acier);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.flux__bouton:focus-visible,
+.cable:focus-visible,
+.prise:focus-visible,
+.reseau__etape:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.flux__bouton.is-ouvrir[aria-pressed='true'] {
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.flux__bouton.is-bloquer[aria-pressed='true'] {
+  background: var(--alarme);
+  color: var(--nuit);
+}
+
+/* 3. Diagnostic */
+.diagnostic__sortie {
+  min-height: 12rem;
+  padding: 0.75rem 1rem 1rem;
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.diagnostic__commande {
+  margin: 0;
+  color: var(--action);
+}
+
+.diagnostic__attente {
+  margin: 0;
+  color: var(--acier);
+}
+
+.diagnostic__scan {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--ambre);
+}
+
+.diagnostic__barre {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ambre), var(--action)) 0 0 / 0 100% no-repeat, var(--trait);
+  animation: scan 1.4s linear forwards;
+}
+
+@keyframes scan {
+  to { background-size: 100% 100%, auto; }
+}
+
+.diagnostic__lignes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diagnostic__lignes li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.6rem;
+  animation: ligne-diag 0.3s ease-out both;
+}
+
+@keyframes ligne-diag {
+  from { opacity: 0; transform: translateX(-8px); }
+}
+
+.diagnostic__lignes .is-ok {
+  color: var(--retabli);
+}
+
+.diagnostic__lignes .is-ko {
+  color: #ff8a8f;
+}
+
+.diagnostic__etat {
+  color: var(--acier);
+}
+
+.diagnostic__conseil {
+  margin: 0.9rem 0 0;
+  color: var(--ambre);
+}
+
+.reseau.is-retabli .flux__paquet {
+  animation-duration: 1.4s;
+}
+
+@media (max-width: 640px) {
+  .flux {
+    grid-template-columns: 1fr;
+  }
+
+  .flux__choix {
+    justify-self: start;
+  }
+
+  .parefeu__legende {
+    display: none;
+  }
+
+  .prise__port {
+    min-width: 3.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flux__paquet,
+  .prise__led,
+  .prise.is-cible,
+  .diagnostic__barre,
+  .diagnostic__lignes li {
+    animation: none;
+  }
+
+  .flux__paquet {
+    display: none;
+  }
+}

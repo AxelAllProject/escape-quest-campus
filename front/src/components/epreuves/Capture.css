@@ -1,0 +1,444 @@
+.capture {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.wireshark {
+  overflow: hidden;
+  border: 1px solid var(--trait-fort);
+  border-radius: 12px;
+  background: var(--ecran);
+  font-family: var(--police-code);
+}
+
+.wireshark__filtre {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--trait);
+}
+
+.wireshark__filtre input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--trait-fort);
+  border-left: 3px solid var(--retabli);
+  border-radius: 5px;
+  background: var(--nuit);
+  color: var(--givre);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.wireshark__filtre input:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.wireshark__raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.puce {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--acier);
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.puce.is-active {
+  border-color: var(--action);
+  background: rgba(61, 214, 245, 0.15);
+  color: var(--givre);
+}
+
+.wireshark__table-zone {
+  max-height: 22rem;
+  overflow: auto;
+}
+
+.wireshark__table {
+  width: 100%;
+  min-width: 46rem;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.wireshark__table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.45rem 0.6rem;
+  background: var(--baie);
+  color: var(--acier);
+  font-weight: 400;
+  text-align: left;
+}
+
+.wireshark__table td {
+  padding: 0.35rem 0.6rem;
+  border-top: 1px solid rgba(14, 26, 43, 0.6);
+  color: var(--givre);
+  white-space: nowrap;
+}
+
+.wireshark__table tbody tr {
+  cursor: pointer;
+}
+
+/* Couleurs par protocole, comme dans Wireshark */
+.wireshark__table .proto-80211 { background: rgba(168, 132, 255, 0.1); }
+.wireshark__table .proto-DHCP { background: rgba(255, 181, 71, 0.08); }
+.wireshark__table .proto-DNS { background: rgba(61, 214, 245, 0.08); }
+.wireshark__table .proto-HTTP { background: rgba(69, 217, 138, 0.09); }
+.wireshark__table .proto-TLS { background: rgba(147, 167, 192, 0.07); }
+
+.wireshark__table tbody tr:hover td {
+  background: rgba(61, 214, 245, 0.08);
+}
+
+.wireshark__table tr.is-choisie td {
+  background: rgba(61, 214, 245, 0.28);
+}
+
+.wireshark__no {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.wireshark__no:focus-visible,
+.domaine:focus-visible,
+.puce:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.domaine {
+  padding: 0 0.1rem;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: none;
+  color: var(--ambre);
+  font: inherit;
+  cursor: pointer;
+}
+
+.domaine:hover:not(:disabled) {
+  background: rgba(255, 181, 71, 0.2);
+}
+
+.domaine:disabled {
+  cursor: default;
+}
+
+.wireshark__vide {
+  color: var(--acier);
+  font-style: italic;
+}
+
+.wireshark__detail {
+  padding: 0.75rem 1rem;
+  border-top: 2px solid var(--trait-fort);
+  background: var(--nuit);
+  font-size: 0.82rem;
+}
+
+.wireshark__detail-titre {
+  margin: 0 0 0.4rem;
+  color: var(--action);
+  overflow-wrap: anywhere;
+}
+
+.wireshark__detail ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--givre);
+  line-height: 1.7;
+}
+
+.wireshark__detail li::marker {
+  content: '▸ ';
+  color: var(--acier);
+}
+
+/* Rapport */
+.rapport {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.1rem;
+  border: 1px solid rgba(255, 181, 71, 0.35);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 181, 71, 0.06), transparent 50%),
+    var(--baie);
+}
+
+.rapport__tete {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rapport__titre {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rapport__score {
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+}
+
+.rapport__ligne {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0.85rem;
+}
+
+.rapport__bloc {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0.85rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  background: var(--ecran);
+}
+
+.rapport__bloc legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  float: left;
+  width: 100%;
+  margin-bottom: 0.6rem;
+  padding-right: 6rem;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.rapport__bloc > :not(legend, .tampon) {
+  clear: both;
+}
+
+.rapport__num {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  color: var(--acier);
+  font-size: 0.8rem;
+}
+
+.rapport__bloc.is-ok {
+  border-color: var(--retabli);
+}
+
+.rapport__bloc.is-ok .rapport__num {
+  border-color: var(--retabli);
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.rapport__bloc.is-ko {
+  border-color: var(--alarme);
+}
+
+.tampon {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.1rem 0.45rem;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  animation: tampon 0.35s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+.tampon.is-ok {
+  color: var(--retabli);
+}
+
+.tampon.is-ko {
+  color: var(--alarme);
+}
+
+.rapport__choix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.option,
+.contre-mesure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--baie);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.option {
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+}
+
+.option input,
+.contre-mesure input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.option:has(input:focus-visible),
+.contre-mesure:has(input:focus-visible) {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.option.is-choisie {
+  border-color: var(--action);
+  background: rgba(61, 214, 245, 0.14);
+}
+
+.rapport__saisie {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  background: var(--nuit);
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.95rem;
+}
+
+.rapport__saisie:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.compteur {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--trait-fort);
+  border-radius: 8px;
+  background: var(--nuit);
+}
+
+.compteur button {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  background: transparent;
+  color: var(--action);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.compteur button:focus-visible {
+  outline: 2px solid var(--action);
+}
+
+.compteur output {
+  min-width: 2.6rem;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.contre-mesures {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0.5rem;
+}
+
+.contre-mesure {
+  align-items: flex-start;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contre-mesure__case {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.1rem;
+  border: 1.5px solid var(--acier);
+  border-radius: 4px;
+}
+
+.contre-mesure.is-choisie {
+  border-color: var(--action);
+  background: rgba(61, 214, 245, 0.1);
+}
+
+.contre-mesure.is-choisie .contre-mesure__case {
+  border-color: var(--action);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%230e1a2b' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% no-repeat,
+    var(--action);
+}
+
+.rapport__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+
+.rapport__actions p {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--acier);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 640px) {
+  .rapport__ligne {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rapport__bloc legend {
+    padding-right: 5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tampon {
+    animation: none;
+  }
+}

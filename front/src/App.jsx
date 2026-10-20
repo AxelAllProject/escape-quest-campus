@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
 import Navbar from './components/Navbar'
-import {
-  badgesObtenus,
-  bilan,
-  enregistrerPartie,
-  EPREUVES,
-  nouvellePartie,
-  pointsEpreuve,
-} from './game/partie'
+import { MISSIONS, trouverMission } from './game/missions'
+import { badgesObtenus, bilan, enregistrerPartie, nouvellePartie, pointsEpreuve } from './game/partie'
 import Accueil from './screens/Accueil'
 import Briefing from './screens/Briefing'
 import Epreuve from './screens/Epreuve'
@@ -18,8 +12,9 @@ import './App.css'
 // Navigation entre les écrans et déroulement de la partie.
 export default function App() {
   const [ecran, setEcran] = useState('accueil')
+  const [mission, setMission] = useState(MISSIONS[0])
   const [etape, setEtape] = useState(0)
-  const [partie, setPartie] = useState(nouvellePartie)
+  const [partie, setPartie] = useState(() => nouvellePartie(MISSIONS[0]))
   const [resultat, setResultat] = useState(null)
   const [maintenant, setMaintenant] = useState(() => Date.now())
 
@@ -41,9 +36,11 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView()
   }
 
-  const ouvrirBriefing = () => {
+  const ouvrirBriefing = (missionId = mission.id) => {
+    const m = trouverMission(missionId)
+    setMission(m)
     setEtape(0)
-    setPartie(nouvellePartie())
+    setPartie(nouvellePartie(m))
     setResultat(null)
     aller('briefing')
   }
@@ -67,14 +64,14 @@ export default function App() {
   const terminer = () => {
     const finie = { ...partie, fin: Date.now() }
     const b = bilan(finie)
-    const ids = badgesObtenus(finie, b)
+    const ids = badgesObtenus(finie, b, mission)
     setPartie(finie)
-    setResultat({ bilan: b, badges: ids, ...enregistrerPartie(b, ids) })
+    setResultat({ bilan: b, badges: ids, ...enregistrerPartie(mission.id, b, ids) })
     aller('victoire')
   }
 
   const epreuveSuivante = () => {
-    if (etape < EPREUVES.length - 1) {
+    if (etape < mission.epreuves.length - 1) {
       setEtape(etape + 1)
       window.scrollTo(0, 0)
     } else {
@@ -94,13 +91,14 @@ export default function App() {
       />
       <main>
         {ecran === 'accueil' && <Accueil onLancer={ouvrirBriefing} />}
-        {ecran === 'briefing' && <Briefing onStart={commencer} />}
+        {ecran === 'briefing' && <Briefing mission={mission} onStart={commencer} />}
         {ecran === 'epreuve' && (
           <Epreuve
-            key={EPREUVES[etape]}
-            id={EPREUVES[etape]}
+            key={mission.epreuves[etape]}
+            id={mission.epreuves[etape]}
+            mission={mission}
             numero={etape + 1}
-            total={EPREUVES.length}
+            total={mission.epreuves.length}
             etats={etats}
             partie={partie}
             maintenant={maintenant}
@@ -112,9 +110,10 @@ export default function App() {
         )}
         {ecran === 'victoire' && resultat && (
           <Victoire
+            mission={mission}
             partie={partie}
             resultat={resultat}
-            onRejouer={ouvrirBriefing}
+            onRejouer={() => ouvrirBriefing()}
             onAccueil={() => allerSection('missions')}
           />
         )}

@@ -1,24 +1,30 @@
 import { useEffect, useRef, useState } from 'react'
 import { chargerEpreuve, chargerIndice, envoyerReponse } from '../api'
-import Rack from '../components/Rack'
-import Logs from '../components/epreuves/Logs'
+import Datacenter3D from '../components/Datacenter3D'
+import Capture from '../components/epreuves/Capture'
+import Chasse from '../components/epreuves/Chasse'
+import Enquete from '../components/epreuves/Enquete'
 import Phishing from '../components/epreuves/Phishing'
-import Ports from '../components/epreuves/Ports'
+import Radar from '../components/epreuves/Radar'
+import Reseau from '../components/epreuves/Reseau'
 import { formaterDuree, scoreEpreuves, secondesRestantes, serie } from '../game/partie'
 import './Epreuve.css'
 
 const COMPOSANTS = {
   phishing: Phishing,
-  ports: Ports,
-  logs: Logs,
+  reseau: Reseau,
+  enquete: Enquete,
+  radar: Radar,
+  chasse: Chasse,
+  capture: Capture,
 }
 
-const MODULES = { messagerie: 'messagerie', reseau: 'réseau', journaux: 'journaux' }
 
 // Écran commun à toutes les épreuves : charge l'énoncé depuis l'API, affiche l'épreuve,
 // envoie la réponse, montre le résultat et le tableau de bord de la partie.
 export default function Epreuve({
   id,
+  mission,
   numero,
   total,
   etats,
@@ -48,6 +54,7 @@ export default function Epreuve({
     }
   }, [id])
 
+  // Renvoie aussi le résultat au composant de l'épreuve, pour ceux qui en ont besoin (chasse).
   const valider = async (answer) => {
     setEnvoi(true)
     try {
@@ -55,10 +62,12 @@ export default function Epreuve({
       setRetour(resultat)
       if (resultat.correct) {
         onReussite()
-      } else {
+      } else if (!resultat.partial) {
+        // « partial » : réponse incomplète mais sans erreur (enquête), donc pas de pénalité.
         onErreur()
         secouer()
       }
+      return resultat
     } catch {
       setRetour({ correct: false, reseau: true, message: "L'API ne répond pas. Vérifie que Symfony tourne, puis réessaie." })
     } finally {
@@ -95,7 +104,7 @@ export default function Epreuve({
   const indicesRestants = epreuve ? epreuve.hints - indices.length : 0
   const restantes = secondesRestantes(partie, maintenant)
   const serieEnCours = serie(partie)
-  const module = epreuve ? MODULES[epreuve.module] ?? epreuve.module : ''
+  const module = epreuve ? mission.modules.find((m) => m.id === epreuve.module)?.nom ?? epreuve.module : ''
 
   return (
     <div className="epreuve">
@@ -132,14 +141,14 @@ export default function Epreuve({
             <p className="epreuve__consigne">{epreuve.instructions}</p>
 
             <div ref={jeu} className="epreuve__jeu">
-              <Composant epreuve={epreuve} onValider={valider} envoi={envoi} verrouille={reussie} />
+              <Composant epreuve={epreuve} onValider={valider} envoi={envoi} verrouille={reussie} retour={retour} />
             </div>
 
             <div className="epreuve__retour" aria-live="polite">
               {retour && !reussie && (
-                <p className="retour is-erreur">
+                <p className={`retour ${retour.partial ? 'is-piste' : 'is-erreur'}`}>
                   <span>{retour.message}</span>
-                  {!retour.reseau && <span className="retour__penalite">−25 pts</span>}
+                  {!retour.reseau && !retour.partial && <span className="retour__penalite">−25 pts</span>}
                 </p>
               )}
               {reussie && (
@@ -189,11 +198,17 @@ export default function Epreuve({
       </section>
 
       <aside className="epreuve__salle" aria-label="Tableau de bord de la mission">
-        <Rack
-          etats={etats}
-          minuteur={formaterDuree(restantes)}
-          legende={restantes > 0 ? "avant l'ouverture des inscriptions" : 'temps écoulé : plus de bonus'}
-        />
+        <div className={`minuteur${restantes === 0 ? ' is-ecoule' : restantes <= 60 ? ' is-urgent' : ''}`}>
+          <p className="minuteur__valeur" role="timer" aria-label={`Temps restant : ${formaterDuree(restantes)}`}>
+            {formaterDuree(restantes)}
+          </p>
+          <p className="minuteur__legende">
+            {restantes > 0 ? mission.legendeMinuteur : 'temps écoulé : plus de bonus'}
+          </p>
+        </div>
+        <div className="epreuve__salle3d">
+          <Datacenter3D baies={mission.modules} etats={etats} compact />
+        </div>
         <dl className="hud">
           <div className="hud__score">
             <dt>Score</dt>

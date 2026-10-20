@@ -1,6 +1,6 @@
 # 🔐 Escape Quest Campus
 
-Mini escape game web (5–10 min) : le joueur résout 3 épreuves pour rétablir un service critique du campus.
+Mini escape game web en 2 missions (10 et 12 min) : dans chacune, le joueur résout 3 épreuves de cybersécurité pour rétablir un service critique du campus.
 Projet réalisé en Scrum dans le cadre du cours Agile & Scrum (CFP Baudimont).
 
 ## Stack
@@ -74,8 +74,18 @@ Puis ouvrir **http://localhost:5173**. Le front redirige `/api` vers `localhost:
 | `GET` | `/api/challenges/{id}` | Énoncé d'une épreuve (jamais la solution) |
 | `GET` | `/api/challenges/{id}/hints/{n}` | Indice n° n de l'épreuve (2 par épreuve) |
 | `POST` | `/api/challenges/{id}/answer` | Vérifie une réponse : `{"answer": …}` → `{"correct": bool, "message": "…"}` |
+| `GET` | `/api/challenges/{id}/probe/{zone}` | Mission 2, épreuve 5 : signal de la borne pirate mesuré dans une salle → `{"zone": "…", "signal": -39}` |
 
-Les épreuves et leurs solutions sont dans `api/src/Game/Challenges.php`.
+Les épreuves et leurs solutions sont dans `api/src/Game/Challenges.php` : mission 1 « Le campus est hors ligne » = épreuves 1 à 3, mission 2 « Wi-Fi fantôme » = épreuves 4 à 6. Côté front, le récit, la durée et l'ordre des épreuves de chaque mission sont dans `front/src/game/missions.js`.
+
+| Épreuve | Format de `answer` | Retour en plus de `correct` / `message` |
+|---|---|---|
+| 1 · Mail piégé | `["expediteur", "lien", …]` (éléments signalés) | — |
+| 2 · Réseau | `{"ports": {"http": 80, …}, "firewall": {"http": "ouvert", "porte": "bloque", …}}` | `fields` (service → bien branché ?), `firewall` (nombre de règles justes) |
+| 3 · Enquête | `{"ip": "…", "compte": "…", "heure": "HH:MM:SS", "persistance": "…", "cle": "…"}` (fiches remplies) | `fields` (fiche → juste ?), `partial` (pistes justes mais dossier incomplet : pas de pénalité) |
+| 4 · Radar Wi-Fi | `["ap3", …]` (bornes signalées) | — |
+| 5 · Chasse | `"repro"` (salle où intercepter) | `zone`, `signal` (mesure gratuite de la salle fouillée) |
+| 6 · Capture | `{"attaque": "deauth", "domaine": "…", "comptes": 3, "actions": ["…", "…", "…"]}` (éléments remplis) | `fields`, `partial` (comme l'enquête) |
 
 ## Accès depuis un autre poste
 
