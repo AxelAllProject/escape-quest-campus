@@ -3,11 +3,18 @@ import { flushSync } from 'react-dom'
 import Navbar from './components/Navbar'
 import Accueil from './screens/Accueil'
 import Briefing from './screens/Briefing'
+import Epreuve from './screens/Epreuve'
 import './App.css'
+
+// Les 3 épreuves de la mission 1, dans l'ordre (id = identifiant côté API).
+const EPREUVES = [1, 2, 3]
+const ETATS_INITIAUX = EPREUVES.map(() => 'verrouille')
 
 // Navigation entre les écrans du jeu (pas besoin de routeur pour quelques écrans).
 export default function App() {
   const [ecran, setEcran] = useState('accueil')
+  const [etape, setEtape] = useState(0)
+  const [etats, setEtats] = useState(ETATS_INITIAUX)
 
   const aller = (prochainEcran) => {
     setEcran(prochainEcran)
@@ -20,6 +27,22 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView()
   }
 
+  const ouvrirBriefing = () => {
+    setEtape(0)
+    setEtats(ETATS_INITIAUX)
+    aller('briefing')
+  }
+
+  const marquerReussie = (index) =>
+    setEtats((liste) => liste.map((etat, i) => (i === index ? 'retabli' : etat)))
+
+  const epreuveSuivante = () => {
+    if (etape < EPREUVES.length - 1) {
+      setEtape(etape + 1)
+      window.scrollTo(0, 0)
+    }
+  }
+
   return (
     <>
       <Navbar
@@ -28,9 +51,19 @@ export default function App() {
         onCommentJouer={() => allerSection('comment-jouer')}
       />
       <main>
-        {ecran === 'accueil' && <Accueil onLancer={() => aller('briefing')} />}
-        {ecran === 'briefing' && <Briefing onStart={() => aller('epreuve1')} />}
-        {ecran === 'epreuve1' && <p className="ecran-attente">Épreuve 1 : à venir (US-2)</p>}
+        {ecran === 'accueil' && <Accueil onLancer={ouvrirBriefing} />}
+        {ecran === 'briefing' && <Briefing onStart={() => aller('epreuve')} />}
+        {ecran === 'epreuve' && (
+          <Epreuve
+            key={EPREUVES[etape]}
+            id={EPREUVES[etape]}
+            numero={etape + 1}
+            total={EPREUVES.length}
+            etats={etats}
+            onReussite={() => marquerReussie(etape)}
+            onSuivante={epreuveSuivante}
+          />
+        )}
       </main>
     </>
   )

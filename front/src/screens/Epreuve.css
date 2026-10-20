@@ -1,0 +1,90 @@
+.epreuve {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+.epreuve__etape {
+  margin: 0 0 0.5rem;
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+  color: var(--action);
+}
+
+.epreuve h1 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.05;
+}
+
+.epreuve__consigne {
+  max-width: 44rem;
+  margin: 0.9rem 0 1.75rem;
+  color: var(--acier);
+  font-size: 1.1rem;
+}
+
+.epreuve__info {
+  color: var(--acier);
+}
+
+.epreuve__info.is-erreur {
+  color: var(--alarme);
+}
+
+.epreuve__retour {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.retour {
+  flex: 1 1 22rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid;
+  border-radius: 0;
+}
+
+.retour.is-succes {
+  border-color: var(--retabli);
+  background: rgba(69, 217, 138, 0.1);
+  color: var(--retabli);
+}
+
+.retour.is-erreur {
+  border-color: var(--alarme);
+  background: var(--alarme-fond);
+  color: #ff9a9e;
+}
+
+.epreuve__salle {
+  position: sticky;
+  top: 5.5rem;
+}
+
+.bouton:disabled {
+  background: var(--trait-fort);
+  color: var(--acier);
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .epreuve {
+    grid-template-columns: 1fr;
+  }
+
+  .epreuve__salle {
+    position: static;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}

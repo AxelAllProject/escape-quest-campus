@@ -1,0 +1,163 @@
+/* Faux client mail, volontairement clair pour trancher avec la salle serveur */
+.mail {
+  overflow: hidden;
+  border: 1px solid var(--trait-fort);
+  border-radius: 12px;
+  background: #f6f8fb;
+  color: #1c2533;
+}
+
+.mail__barre {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.6rem 1rem;
+  background: #e4e9f1;
+  color: #4a5668;
+  font-size: 0.85rem;
+}
+
+.mail__boutons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.mail__boutons i {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #c3cbd8;
+}
+
+.mail__entete {
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid #dde3ec;
+}
+
+.mail__entete dl {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 0.35rem 0.75rem;
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+}
+
+.mail__entete dt {
+  padding-top: 0.2rem;
+  color: #6b778a;
+}
+
+.mail__entete dd {
+  margin: 0;
+}
+
+.mail__date {
+  padding: 0.2rem 0;
+  color: #4a5668;
+}
+
+.mail__corps {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.mail__corps p {
+  margin: 0 0 0.6rem;
+}
+
+/* Élément signalable */
+.signalable {
+  display: inline;
+  padding: 0.15rem 0.35rem;
+  margin: 0 -0.35rem;
+  border: 1.5px dashed transparent;
+  border-radius: 5px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+.signalable:hover:not(:disabled) {
+  border-color: #9aa8bc;
+  background: #eaeef5;
+}
+
+.signalable:focus-visible {
+  outline: 2px solid #1a73c8;
+  outline-offset: 2px;
+}
+
+.signalable.is-signale {
+  border-style: solid;
+  border-color: var(--alarme);
+  background: #fde8e9;
+}
+
+.signalable.is-signale::after {
+  content: 'signalé';
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  background: var(--alarme);
+  color: #fff;
+  font-family: var(--police-texte);
+  font-size: 0.7rem;
+  font-weight: 600;
+  vertical-align: 0.1em;
+}
+
+.signalable:disabled {
+  cursor: default;
+}
+
+.mail__objet {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.mail__lien {
+  color: #1a5fb4;
+  text-decoration: underline;
+}
+
+.mail__pj {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #cfd7e3;
+  background: #fff;
+}
+
+.mail__pj small {
+  color: #6b778a;
+}
+
+.mail__etat {
+  margin: 0;
+  padding: 0.45rem 1rem;
+  overflow-wrap: anywhere;
+  background: #e4e9f1;
+  color: #4a5668;
+  font-family: var(--police-code);
+  font-size: 0.78rem;
+}
+
+.phishing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.phishing__compteur {
+  margin: 0;
+  color: var(--acier);
+}

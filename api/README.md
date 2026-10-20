@@ -25,7 +25,8 @@ Vérifier : http://localhost:8000/api/health → `{"status":"ok"}`
 | Méthode | Route | Rôle |
 |---|---|---|
 | `GET` | `/api/health` | L'API répond |
-| `GET` | `/api/challenges/{id}` | Énoncé + indice d'une épreuve (endpoint modèle) |
-| `POST` | `/api/challenges/{id}/answer` | Vérifie la réponse → `{ "correct": true/false }` *(à venir)* |
+| `GET` | `/api/challenges/{id}` | Énoncé d'une épreuve (jamais la solution) |
+| `POST` | `/api/challenges/{id}/answer` | Vérifie la réponse : `{"answer": …}` → `{"correct": bool, "message": "…"}` |
 
 Toutes les routes commencent par `/api` (préfixe redirigé vers Symfony par Nginx et par le proxy Vite).
+Contenu et solutions des épreuves : `src/Game/Challenges.php`.
