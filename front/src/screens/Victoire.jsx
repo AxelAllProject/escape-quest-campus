@@ -1,32 +1,7 @@
 import { useEffect, useState } from 'react'
 import Badge from '../components/Badge'
-import { BADGES, DUREE, formaterDuree, RANGS } from '../game/partie'
+import { badgesMission, formaterDuree, RANGS } from '../game/partie'
 import './Victoire.css'
-
-const ATTAQUE = [
-  { heure: '07:48', texte: 'Un faux mail « Mise à jour de votre emploi du temps » arrive chez les agents.' },
-  { heure: '07:53', texte: "Un agent ouvre Emploi_du_temps_S2.pdf.exe : l'attaquant a un pied dans le réseau." },
-  { heure: '08:00', texte: '185.220.101.4 devine le mot de passe admin en SSH, après 3 échecs en rafale.' },
-  { heure: '08:01', texte: "L'intrus crée un compte « maintenance » et la clé de récupération X9-4TQZ." },
-  { heure: '08:02', texte: "Il coupe le web, le DNS et SSH, puis ouvre une porte dérobée sur le port 4444 : l'ENT tombe." },
-]
-
-const RIPOSTE = ['Mail piégé démasqué', 'Réseau rebranché, porte 4444 murée', "Dossier de l'intrus bouclé, accès révoqués"]
-
-const REFLEXES = [
-  {
-    titre: 'Avant de cliquer',
-    texte: "Vérifie le domaine de l'expéditeur, survole le lien, et méfie-toi des doubles extensions comme .pdf.exe.",
-  },
-  {
-    titre: 'Ports et pare-feu',
-    texte: '22 SSH, 25 SMTP, 53 DNS, 80 et 443 web, 3306 MySQL. N’ouvre sur Internet que ce que le public doit joindre, et un port inconnu se ferme.',
-  },
-  {
-    titre: 'Lire les journaux',
-    texte: 'Des échecs en rafale puis une réussite depuis la même IP, suivis d’un compte créé : force brute et accès caché. Recoupe toujours plusieurs journaux.',
-  },
-]
 
 // Fait défiler un nombre de 0 jusqu'à sa valeur finale (instantané si les animations sont réduites).
 function useDefilement(cible, duree = 1400) {
@@ -48,10 +23,12 @@ function useDefilement(cible, duree = 1400) {
 
 const ecart = (partie, instant) => formaterDuree(Math.round((instant - partie.debut) / 1000))
 
-export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
+export default function Victoire({ mission, partie, resultat, onRejouer, onAccueil }) {
   const { bilan, badges, nouveauxBadges, nouveauRecord, ancienRecord, progression } = resultat
+  const { titre, lead, fin, attaque, riposte, reflexes } = mission.victoire
+  const listeBadges = badgesMission(mission)
   const score = useDefilement(bilan.score)
-  const horsDelai = bilan.temps >= DUREE
+  const horsDelai = bilan.temps >= partie.duree
 
   return (
     <div className="victoire">
@@ -61,11 +38,8 @@ export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
             <span className="victoire__voyant" aria-hidden="true" />
             {horsDelai ? 'Incident clos, hors délai' : `Incident clos en ${formaterDuree(bilan.temps)}`}
           </p>
-          <h1 id="victoire-titre">Le campus est de nouveau en ligne</h1>
-          <p className="victoire__lead">
-            Mail piégé démasqué, services relancés, accès de l'intrus révoqué. Les étudiants peuvent
-            s'inscrire aux examens.
-          </p>
+          <h1 id="victoire-titre">{titre}</h1>
+          <p className="victoire__lead">{lead}</p>
           <div className="victoire__actions">
             <button type="button" className="bouton" onClick={onRejouer}>
               {nouveauRecord ? 'Rejouer et faire encore mieux' : 'Rejouer et battre ton record'}
@@ -145,11 +119,11 @@ export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
         <div className="section-tete">
           <h2 id="badges-titre">Badges</h2>
           <p>
-            {progression.badges.length} sur {BADGES.length} débloqués
+            {progression.badges.length} sur {listeBadges.length} débloqués
           </p>
         </div>
         <ul className="badges__grille">
-          {BADGES.map((badge) => {
+          {listeBadges.map((badge) => {
             const etat = nouveauxBadges.includes(badge.id)
               ? 'nouveau'
               : progression.badges.includes(badge.id)
@@ -178,7 +152,7 @@ export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
           <div>
             <h3>L'attaque</h3>
             <ol className="frise is-attaque">
-              {ATTAQUE.map((evt) => (
+              {attaque.map((evt) => (
                 <li key={evt.heure + evt.texte}>
                   <time>{evt.heure}</time>
                   <p>{evt.texte}</p>
@@ -194,17 +168,17 @@ export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
                 <p>Tu prends l'incident en charge.</p>
               </li>
               {partie.epreuves.map((e, i) => (
-                <li key={RIPOSTE[i]}>
+                <li key={riposte[i]}>
                   <time>T+{ecart(partie, e.resolueA)}</time>
                   <p>
-                    {RIPOSTE[i]}
+                    {riposte[i]}
                     {e.indices > 0 && ` (${e.indices} indice${e.indices > 1 ? 's' : ''})`}
                   </p>
                 </li>
               ))}
               <li>
                 <time>T+{formaterDuree(bilan.temps)}</time>
-                <p>L'ENT redémarre. Incident clos.</p>
+                <p>{fin}</p>
               </li>
             </ol>
           </div>
@@ -214,7 +188,7 @@ export default function Victoire({ partie, resultat, onRejouer, onAccueil }) {
       <section className="reflexes" aria-labelledby="reflexes-titre">
         <h2 id="reflexes-titre">Les réflexes à retenir</h2>
         <ul className="reflexes__liste">
-          {REFLEXES.map((r) => (
+          {reflexes.map((r) => (
             <li key={r.titre}>
               <h3>{r.titre}</h3>
               <p>{r.texte}</p>

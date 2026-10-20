@@ -1,6 +1,6 @@
 // Baie serveur du campus : un module par épreuve.
 // `etats` : 'verrouille' (voyant rouge) ou 'retabli' (voyant vert) pour chaque module.
-const MODULES = [
+const MODULES_DEFAUT = [
   { id: 'messagerie', nom: 'messagerie' },
   { id: 'reseau', nom: 'réseau' },
   { id: 'journaux', nom: 'journaux' },
@@ -33,6 +33,7 @@ function Grille({ x, y }) {
 }
 
 export default function Rack({
+  modules = MODULES_DEFAUT,
   etats = ['verrouille', 'verrouille', 'verrouille'],
   minuteur = '10:00',
   legende = "avant l'ouverture des inscriptions",
@@ -71,7 +72,7 @@ export default function Rack({
         </text>
       </g>
 
-      {MODULES.map((module, i) => {
+      {modules.map((module, i) => {
         const y = 110 + i * 78
         const retabli = etats[i] === 'retabli'
         return (

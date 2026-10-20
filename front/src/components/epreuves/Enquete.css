@@ -250,9 +250,6 @@
   color: var(--alarme);
 }
 
-@keyframes tampon {
-  from { opacity: 0; transform: rotate(-8deg) scale(2.2); }
-}
 
 .dossier__bulle {
   min-height: 1.4em;

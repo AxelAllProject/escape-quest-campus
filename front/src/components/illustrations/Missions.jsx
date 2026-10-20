@@ -38,3 +38,19 @@ export function IllustrationRancon() {
     </svg>
   )
 }
+
+export function IllustrationServeurs() {
+  return (
+    <svg viewBox="0 0 320 150" aria-hidden="true" className="illu">
+      {[0, 1, 2].map((i) => (
+        <g key={i} transform={`translate(${86 + i * 52} 24)`}>
+          <rect width="44" height="104" rx="5" className="illu__fichier" />
+          {[0, 1, 2, 3].map((u) => (
+            <rect key={u} x="7" y={12 + u * 21} width="30" height="12" rx="2" className="illu__pli" />
+          ))}
+          <circle cx="22" cy="8" r="2.5" className="illu__point" />
+        </g>
+      ))}
+    </svg>
+  )
+}

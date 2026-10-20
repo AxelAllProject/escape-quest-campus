@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * GET  /api/challenges/{id}         énoncé de l'épreuve (sans la solution)
  * GET  /api/challenges/{id}/hints/{n}  indice n° n (à partir de 1)
  * POST /api/challenges/{id}/answer  vérifie la réponse : {"answer": ...} → {"correct": bool, "message": string}
+ * GET  /api/challenges/{id}/probe/{zone}  mesure du signal dans une salle (épreuve « chasse »)
  */
 #[Route('/api/challenges')]
 final class ChallengeController extends AbstractController
@@ -42,6 +43,17 @@ final class ChallengeController extends AbstractController
         }
 
         return $this->json(['index' => $index, 'hint' => $hint]);
+    }
+
+    #[Route('/{id}/probe/{zone}', name: 'api_challenge_probe', requirements: ['id' => '\d+', 'zone' => '[a-z0-9-]+'], methods: ['GET'])]
+    public function probe(int $id, string $zone): JsonResponse
+    {
+        $signal = $this->challenges->probe($id, $zone);
+        if ($signal === null) {
+            return $this->json(['error' => 'Mesure impossible ici.'], 404);
+        }
+
+        return $this->json(['zone' => $zone, 'signal' => $signal]);
     }
 
     #[Route('/{id}/answer', name: 'api_challenge_answer', requirements: ['id' => '\d+'], methods: ['POST'])]

@@ -7,6 +7,8 @@ const LIGNES = [
   { cmd: 'systemctl status nginx', sortie: 'nginx.service: inactive (dead)', niveau: 'alerte' },
   { cmd: 'grep "Failed" /var/log/auth.log | wc -l', sortie: '3', niveau: 'info' },
   { cmd: 'whois 185.220.101.4', sortie: 'origine inconnue, adresse signalée', niveau: 'alerte' },
+  { cmd: 'nmcli dev wifi list | grep campus', sortie: '3 réseaux « campus », dont 1 ouvert : suspect', niveau: 'alerte' },
+  { cmd: 'nslookup ent.campus.fr 192.168.4.1', sortie: 'Address: 192.168.4.1 (réponse falsifiée)', niveau: 'alerte' },
 ]
 
 export default function TerminalDirect() {
@@ -33,7 +35,7 @@ export default function TerminalDirect() {
   return (
     <div className="terminal-direct" aria-hidden="true">
       <p>
-        <span className="terminal-direct__invite">dsi@campus:~$</span> {reduit ? actuelle.cmd : actuelle.cmd.slice(0, tape)}
+        <span className="terminal-direct__invite">soc@campus:~$</span> {reduit ? actuelle.cmd : actuelle.cmd.slice(0, tape)}
         {!finie && <span className="terminal-direct__curseur" />}
       </p>
       <p className={`terminal-direct__sortie is-${actuelle.niveau}`}>{finie ? actuelle.sortie : ' '}</p>

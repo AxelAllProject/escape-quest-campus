@@ -3,17 +3,17 @@ import './Datacenter3D.css'
 
 // Salle serveur en 3D (CSS) : une baie par épreuve, verrouillée tant que l'épreuve n'est pas réussie.
 // `etats` : 'verrouille' ou 'retabli' pour chaque baie ; `compact` : version réduite (tableau de bord).
-const BAIES = [
-  { id: 'messagerie', nom: 'messagerie', numero: 1 },
-  { id: 'reseau', nom: 'réseau', numero: 2 },
-  { id: 'journaux', nom: 'journaux', numero: 3 },
+const BAIES_DEFAUT = [
+  { id: 'messagerie', nom: 'messagerie' },
+  { id: 'reseau', nom: 'réseau' },
+  { id: 'journaux', nom: 'journaux' },
 ]
 
 function Baie({ baie, index, retablie }) {
   return (
     <div className={`baie3d${retablie ? ' is-retabli' : ''}`} style={{ '--i': index }}>
       <div className="baie3d__face baie3d__dessus">
-        <span className="baie3d__num">{baie.numero}</span>
+        <span className="baie3d__num">{index + 1}</span>
         <span className="baie3d__nom">{baie.nom}</span>
       </div>
       <div className="baie3d__face baie3d__avant">
@@ -39,7 +39,11 @@ function Baie({ baie, index, retablie }) {
   )
 }
 
-export default function Datacenter3D({ etats = ['verrouille', 'verrouille', 'verrouille'], compact = false }) {
+export default function Datacenter3D({
+  baies = BAIES_DEFAUT,
+  etats = ['verrouille', 'verrouille', 'verrouille'],
+  compact = false,
+}) {
   const toutRetabli = etats.every((e) => e === 'retabli')
   const scene = useRef(null)
 
@@ -62,14 +66,14 @@ export default function Datacenter3D({ etats = ['verrouille', 'verrouille', 'ver
     <div
       className={`dc3d${compact ? ' dc3d--compact' : ''}${toutRetabli ? ' is-retabli' : ''}`}
       role="img"
-      aria-label={`Salle serveur du campus en 3D : ${BAIES.map((b, i) => `baie ${b.nom} ${etats[i] === 'retabli' ? 'rétablie' : 'verrouillée'}`).join(', ')}`}
+      aria-label={`Salle serveur du campus en 3D : ${baies.map((b, i) => `baie ${b.nom} ${etats[i] === 'retabli' ? 'rétablie' : 'verrouillée'}`).join(', ')}`}
       onPointerMove={incliner}
       onPointerLeave={recentrer}
     >
       <div className="dc3d__scene" ref={scene}>
         <div className="dc3d__sol" />
         <div className="dc3d__halo" />
-        {BAIES.map((baie, i) => (
+        {baies.map((baie, i) => (
           <Baie key={baie.id} baie={baie} index={i} retablie={etats[i] === 'retabli'} />
         ))}
       </div>

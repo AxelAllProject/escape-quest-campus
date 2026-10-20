@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { chargerEpreuve, chargerIndice, envoyerReponse } from '../api'
 import Datacenter3D from '../components/Datacenter3D'
+import Capture from '../components/epreuves/Capture'
+import Chasse from '../components/epreuves/Chasse'
 import Enquete from '../components/epreuves/Enquete'
 import Phishing from '../components/epreuves/Phishing'
+import Radar from '../components/epreuves/Radar'
 import Reseau from '../components/epreuves/Reseau'
 import { formaterDuree, scoreEpreuves, secondesRestantes, serie } from '../game/partie'
 import './Epreuve.css'
@@ -11,14 +14,17 @@ const COMPOSANTS = {
   phishing: Phishing,
   reseau: Reseau,
   enquete: Enquete,
+  radar: Radar,
+  chasse: Chasse,
+  capture: Capture,
 }
 
-const MODULES = { messagerie: 'messagerie', reseau: 'réseau', journaux: 'journaux' }
 
 // Écran commun à toutes les épreuves : charge l'énoncé depuis l'API, affiche l'épreuve,
 // envoie la réponse, montre le résultat et le tableau de bord de la partie.
 export default function Epreuve({
   id,
+  mission,
   numero,
   total,
   etats,
@@ -48,6 +54,7 @@ export default function Epreuve({
     }
   }, [id])
 
+  // Renvoie aussi le résultat au composant de l'épreuve, pour ceux qui en ont besoin (chasse).
   const valider = async (answer) => {
     setEnvoi(true)
     try {
@@ -60,6 +67,7 @@ export default function Epreuve({
         onErreur()
         secouer()
       }
+      return resultat
     } catch {
       setRetour({ correct: false, reseau: true, message: "L'API ne répond pas. Vérifie que Symfony tourne, puis réessaie." })
     } finally {
@@ -96,7 +104,7 @@ export default function Epreuve({
   const indicesRestants = epreuve ? epreuve.hints - indices.length : 0
   const restantes = secondesRestantes(partie, maintenant)
   const serieEnCours = serie(partie)
-  const module = epreuve ? MODULES[epreuve.module] ?? epreuve.module : ''
+  const module = epreuve ? mission.modules.find((m) => m.id === epreuve.module)?.nom ?? epreuve.module : ''
 
   return (
     <div className="epreuve">
@@ -195,11 +203,11 @@ export default function Epreuve({
             {formaterDuree(restantes)}
           </p>
           <p className="minuteur__legende">
-            {restantes > 0 ? "avant l'ouverture des inscriptions" : 'temps écoulé : plus de bonus'}
+            {restantes > 0 ? mission.legendeMinuteur : 'temps écoulé : plus de bonus'}
           </p>
         </div>
         <div className="epreuve__salle3d">
-          <Datacenter3D etats={etats} compact />
+          <Datacenter3D baies={mission.modules} etats={etats} compact />
         </div>
         <dl className="hud">
           <div className="hud__score">
