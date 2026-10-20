@@ -3,7 +3,7 @@ import './Ports.css'
 
 // Épreuve 2 : le joueur remet chaque service sur le bon port, comme dans une console d'admin.
 export default function Ports({ epreuve, onValider, envoi, verrouille }) {
-  const { services, ports } = epreuve
+  const { services, ports, clue } = epreuve
   const [choix, setChoix] = useState({})
   const complet = services.every((s) => choix[s.id])
 
@@ -72,6 +72,16 @@ export default function Ports({ epreuve, onValider, envoi, verrouille }) {
             : '$ systemctl status --all  →  4 services arrêtés (configuration effacée)'}
         </p>
       </div>
+
+      {clue && (
+        <figure className="indice-donne">
+          <figcaption>
+            <span>{clue.file}</span>
+            <span>{clue.note}</span>
+          </figcaption>
+          <pre>{clue.lines.join('\n')}</pre>
+        </figure>
+      )}
 
       <div className="ports__actions">
         <p className="ports__compteur">

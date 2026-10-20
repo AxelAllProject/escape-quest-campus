@@ -32,7 +32,11 @@ function Grille({ x, y }) {
   )
 }
 
-export default function Rack({ etats = ['verrouille', 'verrouille', 'verrouille'], minuteur = '10:00' }) {
+export default function Rack({
+  etats = ['verrouille', 'verrouille', 'verrouille'],
+  minuteur = '10:00',
+  legende = "avant l'ouverture des inscriptions",
+}) {
   const restants = etats.filter((e) => e !== 'retabli').length
 
   return (
@@ -63,7 +67,7 @@ export default function Rack({ etats = ['verrouille', 'verrouille', 'verrouille'
           {minuteur}
         </text>
         <text x="150" y="85" textAnchor="middle" className="rack__legende">
-          avant l'ouverture des inscriptions
+          {legende}
         </text>
       </g>
 

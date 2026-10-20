@@ -106,6 +106,35 @@
   font-size: 0.8rem;
 }
 
+.indice-donne {
+  margin: 1rem 0 0;
+  border: 1px solid rgba(255, 181, 71, 0.4);
+  border-radius: 10px;
+  background: rgba(255, 181, 71, 0.06);
+}
+
+.indice-donne figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid rgba(255, 181, 71, 0.25);
+  color: var(--ambre);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.indice-donne pre {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
 .ports__actions {
   display: flex;
   flex-wrap: wrap;
@@ -125,6 +154,26 @@
     display: block;
     width: fit-content;
     margin-bottom: 0.3rem;
+  }
+
+  .console__table th,
+  .console__table td {
+    padding: 0.7rem 0.5rem;
+  }
+
+  .console__table td:first-child,
+  .console__table th:first-child {
+    width: 2.25rem;
+  }
+
+  .console__select {
+    min-width: 0;
+    width: 5.25rem;
+    padding: 0.45rem 0.4rem;
+  }
+
+  .console__barre span:last-child {
+    display: none;
   }
 }
 

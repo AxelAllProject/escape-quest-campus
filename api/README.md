@@ -26,6 +26,7 @@ Vérifier : http://localhost:8000/api/health → `{"status":"ok"}`
 |---|---|---|
 | `GET` | `/api/health` | L'API répond |
 | `GET` | `/api/challenges/{id}` | Énoncé d'une épreuve (jamais la solution) |
+| `GET` | `/api/challenges/{id}/hints/{n}` | Indice n° n de l'épreuve (2 par épreuve) |
 | `POST` | `/api/challenges/{id}/answer` | Vérifie la réponse : `{"answer": …}` → `{"correct": bool, "message": "…"}` |
 
 Toutes les routes commencent par `/api` (préfixe redirigé vers Symfony par Nginx et par le proxy Vite).

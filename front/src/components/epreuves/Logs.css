@@ -1,0 +1,105 @@
+.terminal {
+  overflow: hidden;
+  border: 1px solid var(--trait-fort);
+  border-radius: 12px;
+  background: var(--ecran);
+  font-family: var(--police-code);
+}
+
+.terminal__barre {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--trait);
+  background: var(--baie);
+  color: var(--acier);
+  font-size: 0.8rem;
+}
+
+.terminal__filtre {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--trait);
+  color: var(--action);
+  font-size: 0.9rem;
+}
+
+.terminal__filtre input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 5px;
+  background: var(--nuit);
+  color: var(--givre);
+  font: inherit;
+}
+
+.terminal__filtre input:focus-visible,
+.logs__champ input:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
+}
+
+.terminal__lignes {
+  max-height: 24rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  overflow: auto;
+  list-style: none;
+  color: var(--acier);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.terminal__lignes .is-alerte {
+  color: #ff8a8f;
+}
+
+.terminal__lignes .is-ok {
+  color: var(--retabli);
+}
+
+.terminal__lignes .is-cle {
+  color: var(--ambre);
+}
+
+.terminal__vide {
+  color: var(--acier);
+  font-style: italic;
+}
+
+.logs__reponse {
+  margin-top: 1.25rem;
+}
+
+.logs__reponse label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.logs__champ {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.logs__champ input {
+  flex: 1 1 12rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  background: var(--baie);
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

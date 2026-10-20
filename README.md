@@ -72,6 +72,7 @@ Puis ouvrir **http://localhost:5173**. Le front redirige `/api` vers `localhost:
 |---|---|---|
 | `GET` | `/api/health` | L'API répond |
 | `GET` | `/api/challenges/{id}` | Énoncé d'une épreuve (jamais la solution) |
+| `GET` | `/api/challenges/{id}/hints/{n}` | Indice n° n de l'épreuve (2 par épreuve) |
 | `POST` | `/api/challenges/{id}/answer` | Vérifie une réponse : `{"answer": …}` → `{"correct": bool, "message": "…"}` |
 
 Les épreuves et leurs solutions sont dans `api/src/Game/Challenges.php`.

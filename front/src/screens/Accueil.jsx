@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import ReseauCampus from '../components/illustrations/ReseauCampus'
+import { BADGES, formaterDuree, lireProgression } from '../game/partie'
 import { IllustrationPanne, IllustrationRancon, IllustrationWifi } from '../components/illustrations/Missions'
 import './Accueil.css'
 
@@ -24,6 +26,9 @@ const ETAPES = [
 ]
 
 export default function Accueil({ onLancer }) {
+  const [progression] = useState(lireProgression)
+  const { record } = progression
+
   return (
     <div className="accueil">
       <section className="hero" aria-labelledby="hero-titre">
@@ -71,8 +76,30 @@ export default function Accueil({ onLancer }) {
               <li>Ports réseau</li>
               <li>Analyse de logs</li>
             </ul>
+            {record && (
+              <dl className="record">
+                <div>
+                  <dt>Ton record</dt>
+                  <dd>{record.score} pts</dd>
+                </div>
+                <div>
+                  <dt>Meilleur rang</dt>
+                  <dd className={`record__rang rang-${record.rang}`}>{record.rang}</dd>
+                </div>
+                <div>
+                  <dt>Temps</dt>
+                  <dd>{formaterDuree(record.temps)}</dd>
+                </div>
+                <div>
+                  <dt>Badges</dt>
+                  <dd>
+                    {progression.badges.length}/{BADGES.length}
+                  </dd>
+                </div>
+              </dl>
+            )}
             <button type="button" className="bouton" onClick={onLancer}>
-              Lancer la mission
+              {record ? 'Rejouer et battre ton record' : 'Lancer la mission'}
             </button>
           </div>
         </article>

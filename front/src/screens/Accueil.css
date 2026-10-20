@@ -199,6 +199,41 @@
   color: var(--givre);
 }
 
+.record {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: start;
+  gap: 0.5rem 1.75rem;
+  margin: -0.5rem 0 1.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 10px;
+  background: var(--ecran);
+}
+
+.record dt {
+  color: var(--acier);
+  font-size: 0.8rem;
+}
+
+.record dd {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.record__rang { color: var(--acier); }
+.record__rang.rang-S { color: var(--ambre); }
+.record__rang.rang-A { color: var(--action); }
+.record__rang.rang-B { color: var(--retabli); }
+
+@media (max-width: 520px) {
+  .record {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
 .missions__a-venir {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

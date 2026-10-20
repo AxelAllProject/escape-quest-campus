@@ -5,11 +5,59 @@
   align-items: start;
   max-width: 1160px;
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
 }
 
-.epreuve__etape {
-  margin: 0 0 0.5rem;
+/* Progression : 3 cases reliées */
+.progression {
+  display: flex;
+  align-items: center;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.progression__pas {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--trait-fort);
+  border-radius: 6px;
+  color: var(--acier);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.progression__pas + .progression__pas {
+  margin-left: 2.75rem;
+  position: relative;
+}
+
+.progression__pas + .progression__pas::before {
+  content: '';
+  position: absolute;
+  right: calc(100% + 0.4rem);
+  width: 2rem;
+  height: 1.5px;
+  background: var(--trait-fort);
+}
+
+.progression__pas.is-actuel {
+  border-color: var(--action);
+  color: var(--action);
+  box-shadow: 0 0 0 4px rgba(61, 214, 245, 0.12);
+}
+
+.progression__pas.is-fait {
+  border-color: var(--retabli);
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.epreuve__module {
+  margin: 0 0 0.4rem;
   font-family: var(--police-code);
   font-size: 0.85rem;
   color: var(--action);
@@ -39,33 +87,106 @@
 }
 
 .epreuve__retour {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.5rem;
   margin-top: 1.5rem;
 }
 
+.epreuve__retour:empty {
+  display: none;
+}
+
 .retour {
-  flex: 1 1 22rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
   margin: 0;
   padding: 0.85rem 1rem;
-  border-left: 3px solid;
-  border-radius: 0;
-}
-
-.retour.is-succes {
-  border-color: var(--retabli);
-  background: rgba(69, 217, 138, 0.1);
-  color: var(--retabli);
-}
-
-.retour.is-erreur {
-  border-color: var(--alarme);
+  border-left: 3px solid var(--alarme);
   background: var(--alarme-fond);
   color: #ff9a9e;
 }
 
+.retour__penalite {
+  font-family: var(--police-code);
+  font-weight: 600;
+}
+
+/* Réussite : le module se rallume */
+.reussite {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.1rem 1.25rem;
+  align-items: center;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(69, 217, 138, 0.5);
+  border-radius: 12px;
+  background: rgba(69, 217, 138, 0.08);
+  animation: allumage 0.5s ease-out;
+}
+
+@keyframes allumage {
+  from { opacity: 0; transform: translateY(8px); box-shadow: 0 0 0 0 rgba(69, 217, 138, 0.5); }
+  60% { box-shadow: 0 0 0 10px rgba(69, 217, 138, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.reussite__cercle {
+  fill: none;
+  stroke: var(--retabli);
+  stroke-width: 3;
+}
+
+.reussite__coche {
+  fill: none;
+  stroke: var(--retabli);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: trace 0.45s 0.15s ease-out forwards;
+}
+
+@keyframes trace {
+  to { stroke-dashoffset: 0; }
+}
+
+.reussite__titre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--retabli);
+}
+
+.reussite__points,
+.reussite__serie {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--police-code);
+  font-size: 0.85rem;
+}
+
+.reussite__points {
+  background: var(--retabli);
+  color: var(--nuit);
+}
+
+.reussite__serie {
+  border: 1px solid var(--ambre);
+  color: var(--ambre);
+}
+
+.reussite__message {
+  margin: 0.3rem 0 0;
+  color: var(--givre);
+}
+
+/* Indices */
 .indices {
   margin-top: 1.5rem;
   padding: 1rem 1.1rem;
@@ -93,15 +214,53 @@
   cursor: not-allowed;
 }
 
+/* Tableau de bord */
 .epreuve__salle {
   position: sticky;
   top: 5.5rem;
 }
 
-.epreuve__bilan {
-  margin: 0.75rem 0 0;
+.hud {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0 0;
+}
+
+.hud > div {
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--trait);
+  border-radius: 8px;
+  background: var(--baie);
+}
+
+.hud .hud__score {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.hud dt {
   color: var(--acier);
-  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.hud dd {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.hud .hud__score dd {
+  color: var(--action);
+  font-size: 1.8rem;
+}
+
+.hud__regle {
+  margin: 0.6rem 0 0;
+  color: var(--acier);
   font-size: 0.8rem;
   text-align: center;
 }
@@ -114,12 +273,64 @@
 
 @media (max-width: 900px) {
   .epreuve {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .epreuve__salle {
     position: static;
-    max-width: 260px;
-    margin: 0 auto;
+    order: -1;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: center;
+  }
+
+  .hud {
+    margin: 0;
+  }
+
+  .hud__regle {
+    grid-column: 1 / -1;
+  }
+
+  .reussite {
+    grid-template-columns: auto 1fr;
+  }
+
+  .reussite__suite {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud {
+    gap: 0.4rem;
+  }
+
+  .hud > div {
+    padding: 0.45rem 0.5rem;
+  }
+
+  .hud dt {
+    font-size: 0.72rem;
+  }
+
+  .hud dd {
+    font-size: 1rem;
+  }
+
+  .hud .hud__score dd {
+    font-size: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reussite {
+    animation: none;
+  }
+
+  .reussite__coche {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }

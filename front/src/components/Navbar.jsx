@@ -2,7 +2,7 @@ import Logo from './Logo'
 import './Navbar.css'
 
 // Barre de navigation commune à tous les écrans.
-export default function Navbar({ onAccueil, onMissions, onCommentJouer }) {
+export default function Navbar({ reseauRetabli, onAccueil, onMissions, onCommentJouer }) {
   return (
     <header className="navbar">
       <div className="navbar__interieur">
@@ -20,9 +20,9 @@ export default function Navbar({ onAccueil, onMissions, onCommentJouer }) {
           </button>
         </nav>
 
-        <p className="navbar__etat" role="status">
+        <p className={`navbar__etat ${reseauRetabli ? 'is-retabli' : ''}`} role="status">
           <span className="navbar__voyant" aria-hidden="true" />
-          Réseau campus dégradé
+          {reseauRetabli ? 'Réseau campus opérationnel' : 'Réseau campus dégradé'}
         </p>
       </div>
     </header>

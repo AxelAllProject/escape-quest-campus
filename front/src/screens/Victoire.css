@@ -1,0 +1,453 @@
+.victoire {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+.victoire h2 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.victoire h3 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.victoire section + section {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--trait);
+}
+
+/* Hero : texte + certificat de rang */
+.victoire__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.victoire__statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid rgba(69, 217, 138, 0.45);
+  border-radius: 999px;
+  background: rgba(69, 217, 138, 0.1);
+  color: var(--retabli);
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.victoire__voyant {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--retabli);
+}
+
+.victoire h1 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.victoire__lead {
+  max-width: 34rem;
+  margin: 1.5rem 0 0;
+  color: var(--acier);
+  font-size: 1.2rem;
+}
+
+.victoire__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  margin-top: 2rem;
+}
+
+.victoire__actions .bouton-secondaire {
+  background: none;
+  cursor: pointer;
+}
+
+.certificat {
+  --rang: var(--acier);
+  display: grid;
+  justify-items: center;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 16px;
+  background: var(--baie);
+  text-align: center;
+}
+
+.certificat.rang-S { --rang: var(--ambre); }
+.certificat.rang-A { --rang: var(--action); }
+.certificat.rang-B { --rang: var(--retabli); }
+
+.certificat__embleme {
+  width: 150px;
+  height: auto;
+  animation: revelation 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+@keyframes revelation {
+  from { opacity: 0; transform: scale(0.6) rotate(-8deg); }
+  to { opacity: 1; transform: none; }
+}
+
+.certificat__hex {
+  fill: none;
+  stroke: var(--rang);
+  stroke-width: 3;
+}
+
+.certificat__hex-int {
+  fill: color-mix(in srgb, var(--rang) 14%, transparent);
+  stroke: color-mix(in srgb, var(--rang) 45%, transparent);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 5;
+}
+
+.certificat__lettre {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 76px;
+  fill: var(--rang);
+}
+
+.certificat__titre {
+  margin: 0.75rem 0 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--rang);
+}
+
+.certificat__score {
+  margin: 0.25rem 0 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.certificat__score span {
+  color: var(--acier);
+  font-size: 1.2rem;
+}
+
+.certificat__record {
+  margin: 0.6rem 0 0;
+  color: var(--acier);
+  font-size: 0.95rem;
+}
+
+.certificat__record.is-nouveau {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: var(--ambre);
+  color: var(--nuit);
+  font-weight: 600;
+}
+
+/* Détail du score */
+.decompte {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2rem 3rem;
+  align-items: start;
+}
+
+.decompte__lignes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--police-code);
+}
+
+.decompte__lignes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--trait-fort);
+}
+
+.decompte__lignes em {
+  color: var(--ambre);
+  font-style: normal;
+}
+
+.decompte__lignes .decompte__total {
+  border-bottom: none;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--action);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.stats div {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--trait);
+  border-radius: 10px;
+  background: var(--baie);
+}
+
+.stats dt {
+  color: var(--acier);
+  font-size: 0.85rem;
+}
+
+.stats dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+/* Badges */
+.section-tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-tete p {
+  margin: 0;
+  color: var(--acier);
+  font-family: var(--police-code);
+}
+
+.badges__grille {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badge {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.badge-hex {
+  width: 56px;
+  height: auto;
+}
+
+.badge-hex__fond {
+  fill: var(--baie);
+  stroke: var(--trait-fort);
+  stroke-width: 2;
+}
+
+.badge-hex__icone {
+  fill: none;
+  stroke: var(--acier);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.badge-hex.is-obtenu .badge-hex__fond { stroke: var(--retabli); }
+.badge-hex.is-obtenu .badge-hex__icone { stroke: var(--retabli); }
+.badge-hex.is-nouveau .badge-hex__fond { fill: color-mix(in srgb, var(--ambre) 18%, var(--baie)); stroke: var(--ambre); }
+.badge-hex.is-nouveau .badge-hex__icone { stroke: var(--ambre); }
+.badge-hex.is-nouveau { animation: revelation 0.6s 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; }
+
+.badge.is-verrouille .badge__nom,
+.badge.is-verrouille .badge__texte {
+  opacity: 0.55;
+}
+
+.badge__nom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.badge__nouveau,
+.badge__encore {
+  padding: 0 0.45rem;
+  border-radius: 4px;
+  font-family: var(--police-texte);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge__nouveau {
+  background: var(--ambre);
+  color: var(--nuit);
+}
+
+.badge__encore {
+  border: 1px solid var(--retabli);
+  color: var(--retabli);
+}
+
+.badge__texte {
+  margin: 0.15rem 0 0;
+  color: var(--acier);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Chronologie */
+.chronologie h2 {
+  margin-bottom: 1.5rem;
+}
+
+.chronologie__colonnes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 3rem;
+}
+
+.chronologie h3 {
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+}
+
+.frise {
+  --couleur: var(--alarme);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frise.is-riposte {
+  --couleur: var(--retabli);
+}
+
+.frise li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  gap: 1rem;
+  padding: 0 0 1.1rem 1.4rem;
+}
+
+.frise li::before {
+  content: '';
+  position: absolute;
+  top: 0.45rem;
+  left: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--couleur);
+}
+
+.frise li::after {
+  content: '';
+  position: absolute;
+  top: 1.2rem;
+  bottom: 0.1rem;
+  left: 0.27rem;
+  width: 1px;
+  background: color-mix(in srgb, var(--couleur) 40%, transparent);
+}
+
+.frise li:last-child::after {
+  display: none;
+}
+
+.frise time {
+  color: var(--couleur);
+  font-family: var(--police-code);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.frise p {
+  margin: 0;
+  color: var(--givre);
+}
+
+/* Réflexes */
+.reflexes h2 {
+  margin-bottom: 1.5rem;
+}
+
+.reflexes__liste {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reflexes__liste li {
+  padding-top: 1rem;
+  border-top: 2px solid var(--action);
+}
+
+.reflexes__liste h3 {
+  font-size: 1.15rem;
+}
+
+.reflexes__liste p {
+  margin: 0.4rem 0 0;
+  color: var(--acier);
+}
+
+@media (max-width: 900px) {
+  .victoire__hero,
+  .decompte,
+  .chronologie__colonnes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .certificat {
+    max-width: 360px;
+  }
+
+  .badges__grille,
+  .reflexes__liste {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .badges__grille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certificat__embleme,
+  .badge-hex.is-nouveau {
+    animation: none;
+  }
+}

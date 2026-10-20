@@ -74,6 +74,15 @@
   animation: clignote 1.4s steps(2, jump-none) infinite;
 }
 
+.navbar__etat.is-retabli {
+  color: var(--retabli);
+}
+
+.navbar__etat.is-retabli .navbar__voyant {
+  background: var(--retabli);
+  animation: none;
+}
+
 .logo__fond { fill: var(--baie); stroke: var(--trait-fort); }
 .logo__unite { fill: var(--acier); }
 .logo__voyant { fill: var(--alarme); }
