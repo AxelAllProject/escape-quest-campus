@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { chargerEpreuve, chargerIndice, envoyerReponse } from '../api'
-import Rack from '../components/Rack'
+import Datacenter3D from '../components/Datacenter3D'
 import Logs from '../components/epreuves/Logs'
 import Phishing from '../components/epreuves/Phishing'
 import Ports from '../components/epreuves/Ports'
@@ -189,11 +189,17 @@ export default function Epreuve({
       </section>
 
       <aside className="epreuve__salle" aria-label="Tableau de bord de la mission">
-        <Rack
-          etats={etats}
-          minuteur={formaterDuree(restantes)}
-          legende={restantes > 0 ? "avant l'ouverture des inscriptions" : 'temps écoulé : plus de bonus'}
-        />
+        <div className={`minuteur${restantes === 0 ? ' is-ecoule' : restantes <= 60 ? ' is-urgent' : ''}`}>
+          <p className="minuteur__valeur" role="timer" aria-label={`Temps restant : ${formaterDuree(restantes)}`}>
+            {formaterDuree(restantes)}
+          </p>
+          <p className="minuteur__legende">
+            {restantes > 0 ? "avant l'ouverture des inscriptions" : 'temps écoulé : plus de bonus'}
+          </p>
+        </div>
+        <div className="epreuve__salle3d">
+          <Datacenter3D etats={etats} compact />
+        </div>
         <dl className="hud">
           <div className="hud__score">
             <dt>Score</dt>

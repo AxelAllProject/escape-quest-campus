@@ -200,6 +200,50 @@
   backface-visibility: visible;
 }
 
+/* Baie rétablie : tout passe au vert et la baie « se rallume » */
+.baie3d.is-retabli {
+  animation: rallumage 0.7s ease-out;
+}
+
+@keyframes rallumage {
+  40% { transform: translateZ(18px); }
+}
+
+.baie3d.is-retabli .baie3d__num {
+  border-color: var(--retabli);
+  color: var(--retabli);
+}
+
+.baie3d.is-retabli .baie3d__ecran {
+  color: var(--retabli);
+}
+
+.baie3d.is-retabli .baie3d__voyant,
+.baie3d.is-retabli .baie3d__led {
+  background: var(--retabli);
+  animation: none;
+}
+
+.baie3d.is-retabli .baie3d__avant {
+  box-shadow: inset 0 0 22px rgba(69, 217, 138, 0.25);
+}
+
+.baie3d.is-retabli .baie3d__cadenas {
+  stroke: var(--retabli);
+}
+
+.dc3d.is-retabli .dc3d__halo {
+  background: radial-gradient(closest-side, rgba(69, 217, 138, 0.35), transparent);
+}
+
+/* Version compacte (tableau de bord des épreuves) */
+.dc3d--compact {
+  height: 460px;
+  transform: scale(0.6);
+  transform-origin: top center;
+  margin: 0 -100px calc(-0.4 * 460px);
+}
+
 /* Sur petit écran, on réduit toute la scène (et la place qu'elle occupe) */
 @media (max-width: 900px) {
   .dc3d {
@@ -216,6 +260,13 @@
   }
 }
 
+@media (max-width: 900px) {
+  .dc3d.dc3d--compact {
+    transform: scale(0.4);
+    margin: -20px -132px calc(-0.6 * 460px - 20px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dc3d__scene {
     transition: none;
@@ -223,7 +274,8 @@
 
   .dc3d__halo,
   .baie3d__voyant,
-  .baie3d__led {
+  .baie3d__led,
+  .baie3d.is-retabli {
     animation: none;
   }
 }

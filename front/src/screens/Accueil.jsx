@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import Datacenter3D from '../components/Datacenter3D'
+import Globe3D from '../components/Globe3D'
+import TerminalDirect from '../components/TerminalDirect'
 import { IllustrationRancon, IllustrationWifi } from '../components/illustrations/Missions'
 import { BADGES, formaterDuree, lireProgression } from '../game/partie'
+import useApparition from '../hooks/useApparition'
 import './Accueil.css'
 
 // Les 3 épreuves, dans l'ordre : ce que le joueur doit faire, en clair.
@@ -43,9 +46,10 @@ const PROCHAINES = [
 export default function Accueil({ onLancer }) {
   const [progression] = useState(lireProgression)
   const { record } = progression
+  const racine = useApparition()
 
   return (
-    <div className="accueil">
+    <div className="accueil" ref={racine}>
       <section className="hero" aria-labelledby="hero-titre">
         <div className="hero__texte">
           <p className="hero__alerte">
@@ -68,15 +72,16 @@ export default function Accueil({ onLancer }) {
               Voir les règles
             </a>
           </div>
+          <TerminalDirect />
         </div>
         <div className="hero__illustration">
-          <Datacenter3D />
-          <p className="hero__legende">1 baie verrouillée = 1 épreuve à réussir</p>
+          <Globe3D />
+          <p className="hero__legende">Attaques en direct vers le campus, fais glisser pour tourner le globe</p>
         </div>
       </section>
 
       <section id="missions" className="mission" aria-labelledby="mission-titre">
-        <div className="mission__tete">
+        <div className="mission__tete" data-apparition>
           <h2 id="mission-titre">Ta mission</h2>
           <p>
             L'intrus est entré par la messagerie, a coupé les services du campus et s'est caché un accès
@@ -84,9 +89,14 @@ export default function Accueil({ onLancer }) {
           </p>
         </div>
 
+        <div className="mission__salle" data-apparition>
+          <Datacenter3D />
+          <p className="mission__legende">1 baie verrouillée = 1 épreuve à réussir</p>
+        </div>
+
         <ol className="parcours">
           {EPREUVES.map((epreuve, i) => (
-            <li key={epreuve.titre} className="parcours__etape">
+            <li key={epreuve.titre} className="parcours__etape" data-apparition style={{ '--delai': `${i * 120}ms` }}>
               <span className="parcours__num" aria-hidden="true">
                 {i + 1}
               </span>
@@ -98,7 +108,7 @@ export default function Accueil({ onLancer }) {
           ))}
         </ol>
 
-        <div className="objectif">
+        <div className="objectif" data-apparition>
           <div className="objectif__texte">
             <h3>Pour gagner</h3>
             <p>
@@ -137,8 +147,8 @@ export default function Accueil({ onLancer }) {
       <section id="comment-jouer" className="regles" aria-labelledby="regles-titre">
         <h2 id="regles-titre">Les règles</h2>
         <dl className="regles__grille">
-          {REGLES.map((regle) => (
-            <div key={regle.titre} className="regle">
+          {REGLES.map((regle, i) => (
+            <div key={regle.titre} className="regle" data-apparition style={{ '--delai': `${i * 70}ms` }}>
               <dt>{regle.titre}</dt>
               <dd className="regle__valeur">{regle.valeur}</dd>
               <dd className="regle__texte">{regle.texte}</dd>
