@@ -5,3 +5,10 @@
   font-family: var(--police-titre);
   font-size: 1.4rem;
 }
+
+.chargement-arene {
+  padding: 6rem 1rem;
+  color: var(--acier);
+  font-family: var(--police-code);
+  text-align: center;
+}
