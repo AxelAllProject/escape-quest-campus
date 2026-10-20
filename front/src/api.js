@@ -22,3 +22,7 @@ export function envoyerReponse(id, answer) {
     body: JSON.stringify({ answer }),
   }).then(lireJson)
 }
+
+export function chargerIndice(id, index) {
+  return fetch(`/api/challenges/${id}/hints/${index}`).then(lireJson)
+}

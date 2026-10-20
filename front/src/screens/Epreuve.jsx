@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react'
-import { chargerEpreuve, envoyerReponse } from '../api'
+import { chargerEpreuve, chargerIndice, envoyerReponse } from '../api'
 import Rack from '../components/Rack'
 import Phishing from '../components/epreuves/Phishing'
+import Ports from '../components/epreuves/Ports'
 import './Epreuve.css'
 
 const COMPOSANTS = {
   phishing: Phishing,
+  ports: Ports,
 }
 
 // Écran commun à toutes les épreuves : charge l'énoncé depuis l'API,
 // affiche l'épreuve, envoie la réponse et montre le résultat.
-export default function Epreuve({ id, numero, total, etats, onReussite, onSuivante }) {
+export default function Epreuve({ id, numero, total, etats, indicesUtilises, onReussite, onSuivante, onIndice }) {
   const [epreuve, setEpreuve] = useState(null)
   const [chargement, setChargement] = useState('en-cours')
   const [retour, setRetour] = useState(null)
   const [envoi, setEnvoi] = useState(false)
+  const [indices, setIndices] = useState([])
   const reussie = retour?.correct === true
 
   useEffect(() => {
@@ -40,7 +43,18 @@ export default function Epreuve({ id, numero, total, etats, onReussite, onSuivan
     }
   }
 
+  const demanderIndice = async () => {
+    try {
+      const { hint } = await chargerIndice(id, indices.length + 1)
+      setIndices((liste) => [...liste, hint])
+      onIndice()
+    } catch {
+      setRetour({ correct: false, message: "Impossible de récupérer l'indice : l'API ne répond pas." })
+    }
+  }
+
   const Composant = epreuve ? COMPOSANTS[epreuve.type] : null
+  const indicesRestants = epreuve ? epreuve.hints - indices.length : 0
 
   return (
     <div className="epreuve">
@@ -79,12 +93,35 @@ export default function Epreuve({ id, numero, total, etats, onReussite, onSuivan
                 </button>
               )}
             </div>
+            {!reussie && epreuve.hints > 0 && (
+              <div className="indices">
+                {indices.length > 0 && (
+                  <ol className="indices__liste" aria-label="Indices obtenus">
+                    {indices.map((indice) => (
+                      <li key={indice}>{indice}</li>
+                    ))}
+                  </ol>
+                )}
+                <button
+                  type="button"
+                  className="bouton-secondaire"
+                  disabled={indicesRestants === 0}
+                  onClick={demanderIndice}
+                >
+                  {indicesRestants > 0
+                    ? `Demander un indice (${indicesRestants} restant${indicesRestants > 1 ? 's' : ''}, coûte des points)`
+                    : 'Plus aucun indice disponible'}
+                </button>
+              </div>
+            )}
+
           </>
         )}
       </section>
 
       <aside className="epreuve__salle" aria-label="État de la baie serveur">
         <Rack etats={etats} />
+        <p className="epreuve__bilan">Indices utilisés : {indicesUtilises}</p>
       </aside>
     </div>
   )

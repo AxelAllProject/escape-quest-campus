@@ -66,9 +66,44 @@
   color: #ff9a9e;
 }
 
+.indices {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px dashed var(--trait-fort);
+  border-radius: 10px;
+}
+
+.indices__liste {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  color: var(--ambre);
+}
+
+.indices__liste li + li {
+  margin-top: 0.4rem;
+}
+
+.indices .bouton-secondaire {
+  background: none;
+  cursor: pointer;
+}
+
+.indices .bouton-secondaire:disabled {
+  color: var(--acier);
+  cursor: not-allowed;
+}
+
 .epreuve__salle {
   position: sticky;
   top: 5.5rem;
+}
+
+.epreuve__bilan {
+  margin: 0.75rem 0 0;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  text-align: center;
 }
 
 .bouton:disabled {

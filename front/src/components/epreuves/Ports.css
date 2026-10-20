@@ -1,0 +1,135 @@
+.console {
+  overflow: hidden;
+  border: 1px solid var(--trait-fort);
+  border-radius: 12px;
+  background: var(--ecran);
+}
+
+.console__barre {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--trait);
+  background: var(--baie);
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.console__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.console__table th {
+  padding: 0.75rem 1rem 0.5rem;
+  color: var(--acier);
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.console__table td {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--trait);
+  vertical-align: middle;
+}
+
+.console__table td:first-child,
+.console__table th:first-child {
+  width: 4rem;
+  text-align: center;
+}
+
+.console__voyant {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--alarme);
+  animation: clignote 1.1s steps(2, jump-none) infinite;
+}
+
+.console__voyant.is-actif {
+  background: var(--retabli);
+  animation: none;
+}
+
+.console__protocole {
+  display: inline-block;
+  min-width: 3.8rem;
+  margin-right: 0.6rem;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 4px;
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.console__nom {
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.console__desc {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--acier);
+  font-size: 0.9rem;
+}
+
+.console__select {
+  min-width: 7.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--trait-fort);
+  border-radius: 6px;
+  background: var(--baie);
+  color: var(--givre);
+  font-family: var(--police-code);
+  font-size: 0.95rem;
+}
+
+.console__select:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.console__sortie {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--trait);
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+}
+
+.ports__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.ports__compteur {
+  margin: 0;
+  color: var(--acier);
+}
+
+@media (max-width: 560px) {
+  .console__protocole {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .console__voyant {
+    animation: none;
+  }
+}

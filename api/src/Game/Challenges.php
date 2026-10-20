@@ -5,7 +5,8 @@ namespace App\Game;
 /**
  * Contenu des épreuves de la mission « Le campus est hors ligne ».
  *
- * Les solutions restent côté serveur : elles ne sont jamais renvoyées au front.
+ * Les solutions et les indices restent côté serveur : les solutions ne sont jamais
+ * renvoyées au front, les indices seulement un par un, à la demande.
  */
 final class Challenges
 {
@@ -31,21 +32,62 @@ final class Challenges
             ],
             'expected' => 3,
         ],
+        2 => [
+            'id' => 2,
+            'module' => 'reseau',
+            'title' => 'Les services coupés',
+            'type' => 'ports',
+            'instructions' => "L'attaquant a arrêté les services du campus et effacé leur configuration. Indique sur quel port chaque service doit écouter, puis relance-les.",
+            'services' => [
+                ['id' => 'http', 'name' => 'Serveur web', 'protocol' => 'HTTP', 'description' => "Pages de l'ENT, sans chiffrement"],
+                ['id' => 'https', 'name' => 'Serveur web sécurisé', 'protocol' => 'HTTPS', 'description' => "Pages de l'ENT, chiffrées"],
+                ['id' => 'ssh', 'name' => 'Administration à distance', 'protocol' => 'SSH', 'description' => 'Connexion des admins aux serveurs'],
+                ['id' => 'dns', 'name' => 'Résolution de noms', 'protocol' => 'DNS', 'description' => 'Traduit ent.campus.fr en adresse IP'],
+            ],
+            'ports' => [21, 22, 25, 53, 80, 443, 3306],
+        ],
     ];
 
     private const SOLUTIONS = [
         1 => ['expediteur', 'lien', 'piece_jointe'],
+        2 => ['http' => 80, 'https' => 443, 'ssh' => 22, 'dns' => 53],
     ];
 
-    /** Données publiques d'une épreuve, ou null si elle n'existe pas. */
+    private const HINTS = [
+        1 => [
+            "Compare l'adresse de l'expéditeur avec le domaine officiel du campus : campus.fr.",
+            'Survole le lien pour voir où il mène vraiment, et regarde la toute fin du nom de la pièce jointe.',
+        ],
+        2 => [
+            "Le web chiffré (HTTPS) n'utilise pas le même port que le web classique (HTTP).",
+            'SSH écoute sur le port 22 et DNS sur le port 53.',
+        ],
+    ];
+
+    private const SUCCESS = [
+        1 => 'Bien vu : expéditeur usurpé, lien trompeur et pièce jointe exécutable. La messagerie est sécurisée.',
+        2 => 'Services relancés : web sur 80 et 443, SSH sur 22, DNS sur 53. Le réseau du campus répond de nouveau.',
+    ];
+
+    /** Données publiques d'une épreuve (avec le nombre d'indices), ou null si elle n'existe pas. */
     public function find(int $id): ?array
     {
-        return self::CHALLENGES[$id] ?? null;
+        if (!isset(self::CHALLENGES[$id])) {
+            return null;
+        }
+
+        return self::CHALLENGES[$id] + ['hints' => \count(self::HINTS[$id] ?? [])];
     }
 
     public function count(): int
     {
         return \count(self::CHALLENGES);
+    }
+
+    /** Indice n° $index (à partir de 1), ou null s'il n'existe pas. */
+    public function hint(int $id, int $index): ?string
+    {
+        return self::HINTS[$id][$index - 1] ?? null;
     }
 
     /**
@@ -55,24 +97,49 @@ final class Challenges
      */
     public function check(int $id, mixed $answer): array
     {
-        return match (self::CHALLENGES[$id]['type']) {
+        [$justes, $attendus] = match (self::CHALLENGES[$id]['type']) {
             'phishing' => $this->checkPhishing($id, $answer),
+            'ports' => $this->checkPorts($id, $answer),
         };
+
+        if ($justes === $attendus) {
+            return ['correct' => true, 'message' => self::SUCCESS[$id]];
+        }
+
+        return [
+            'correct' => false,
+            'message' => match (self::CHALLENGES[$id]['type']) {
+                'phishing' => sprintf('%d signalement(s) juste(s) sur %d. Méfie-toi de ce qui est affiché : vérifie ce qui se cache derrière.', $justes, $attendus),
+                'ports' => sprintf('%d service(s) sur %d démarre(nt) correctement. Les autres ne répondent toujours pas.', $justes, $attendus),
+            },
+        ];
     }
 
+    /** @return array{int, int} nombre de bons signalements, nombre attendu (0 si trop de signalements) */
     private function checkPhishing(int $id, mixed $answer): array
     {
         $solution = self::SOLUTIONS[$id];
         $signales = \is_array($answer) ? array_values(array_unique(array_filter($answer, 'is_string'))) : [];
         $justes = \count(array_intersect($signales, $solution));
 
-        if ($justes === \count($solution) && \count($signales) === \count($solution)) {
-            return ['correct' => true, 'message' => 'Bien vu : expéditeur usurpé, lien trompeur et pièce jointe exécutable. La messagerie est sécurisée.'];
+        if (\count($signales) > \count($solution)) {
+            $justes = min($justes, \count($solution) - 1);
         }
 
-        return [
-            'correct' => false,
-            'message' => sprintf('%d signalement(s) juste(s) sur %d. Méfie-toi de ce qui est affiché : vérifie ce qui se cache derrière.', $justes, \count($solution)),
-        ];
+        return [$justes, \count($solution)];
+    }
+
+    /** @return array{int, int} nombre de services sur le bon port, nombre de services */
+    private function checkPorts(int $id, mixed $answer): array
+    {
+        $solution = self::SOLUTIONS[$id];
+        $justes = 0;
+        foreach ($solution as $service => $port) {
+            if (\is_array($answer) && isset($answer[$service]) && (int) $answer[$service] === $port) {
+                ++$justes;
+            }
+        }
+
+        return [$justes, \count($solution)];
     }
 }

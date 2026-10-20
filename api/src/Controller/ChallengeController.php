@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * Épreuves du jeu.
  *
  * GET  /api/challenges/{id}         énoncé de l'épreuve (sans la solution)
+ * GET  /api/challenges/{id}/hints/{n}  indice n° n (à partir de 1)
  * POST /api/challenges/{id}/answer  vérifie la réponse : {"answer": ...} → {"correct": bool, "message": string}
  */
 #[Route('/api/challenges')]
@@ -30,6 +31,17 @@ final class ChallengeController extends AbstractController
         }
 
         return $this->json($challenge + ['total' => $this->challenges->count()]);
+    }
+
+    #[Route('/{id}/hints/{index}', name: 'api_challenge_hint', requirements: ['id' => '\d+', 'index' => '\d+'], methods: ['GET'])]
+    public function hint(int $id, int $index): JsonResponse
+    {
+        $hint = $this->challenges->hint($id, $index);
+        if ($hint === null) {
+            return $this->json(['error' => 'Indice introuvable.'], 404);
+        }
+
+        return $this->json(['index' => $index, 'hint' => $hint]);
     }
 
     #[Route('/{id}/answer', name: 'api_challenge_answer', requirements: ['id' => '\d+'], methods: ['POST'])]

@@ -15,6 +15,7 @@ export default function App() {
   const [ecran, setEcran] = useState('accueil')
   const [etape, setEtape] = useState(0)
   const [etats, setEtats] = useState(ETATS_INITIAUX)
+  const [indicesUtilises, setIndicesUtilises] = useState(0)
 
   const aller = (prochainEcran) => {
     setEcran(prochainEcran)
@@ -30,6 +31,7 @@ export default function App() {
   const ouvrirBriefing = () => {
     setEtape(0)
     setEtats(ETATS_INITIAUX)
+    setIndicesUtilises(0)
     aller('briefing')
   }
 
@@ -60,8 +62,10 @@ export default function App() {
             numero={etape + 1}
             total={EPREUVES.length}
             etats={etats}
+            indicesUtilises={indicesUtilises}
             onReussite={() => marquerReussie(etape)}
             onSuivante={epreuveSuivante}
+            onIndice={() => setIndicesUtilises((n) => n + 1)}
           />
         )}
       </main>
