@@ -1,27 +1,5 @@
 // Illustrations des cartes de mission.
 
-export function IllustrationPanne() {
-  return (
-    <svg viewBox="76 2 232 146" aria-hidden="true" className="illu">
-      <rect x="96" y="14" width="128" height="122" rx="8" className="illu__chassis" />
-      {[26, 62, 98].map((y, i) => (
-        <g key={y}>
-          <rect x="108" y={y} width="104" height="28" rx="4" className="illu__unite" />
-          <circle cx="122" cy={y + 14} r="4" className="illu__voyant" style={{ animationDelay: `${i * 0.3}s` }} />
-          <rect x="134" y={y + 11} width="44" height="6" rx="3" className="illu__barre" />
-          {[190, 196, 202].map((x) => (
-            <line key={x} x1={x} y1={y + 7} x2={x} y2={y + 21} className="illu__grille" />
-          ))}
-        </g>
-      ))}
-      <g transform="translate(232 18)">
-        <rect width="58" height="26" rx="13" className="illu__badge" />
-        <text x="29" y="17.5" textAnchor="middle" className="illu__badge-texte">503</text>
-      </g>
-    </svg>
-  )
-}
-
 export function IllustrationWifi() {
   const arcs = (cx, cy, classe) =>
     [16, 32, 48].map((r) => (

@@ -5,7 +5,7 @@
 }
 
 .accueil h2 {
-  margin: 0 0 1.75rem;
+  margin: 0;
   font-family: var(--police-titre);
   font-weight: 600;
   font-size: clamp(1.8rem, 3.5vw, 2.4rem);
@@ -19,22 +19,59 @@
   line-height: 1.2;
 }
 
+.accueil section + section {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--trait);
+}
+
 /* Hero */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.18fr);
-  gap: clamp(2rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 3rem);
   align-items: center;
-  padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(3rem, 7vw, 5rem);
+  padding: clamp(2rem, 6vw, 4rem) 0 clamp(2.5rem, 6vw, 4rem);
+}
+
+.hero__alerte {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid var(--alarme-trait);
+  border-radius: 999px;
+  background: var(--alarme-fond);
+  color: var(--alarme);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.hero__voyant {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--alarme);
+  animation: clignote 1.1s steps(2, jump-none) infinite;
 }
 
 .hero h1 {
   margin: 0;
   font-family: var(--police-titre);
   font-weight: 700;
-  font-size: clamp(2.8rem, 6.5vw, 4.9rem);
-  line-height: 0.98;
+  font-size: clamp(2.6rem, 5.6vw, 4.4rem);
+  line-height: 1;
   letter-spacing: -0.02em;
+}
+
+.hero__sous-titre {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--action);
+  font-size: 0.55em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .hero__lead {
@@ -50,6 +87,18 @@
   flex-wrap: wrap;
   gap: 0.85rem 1rem;
   margin-top: 2rem;
+}
+
+.hero__illustration {
+  display: grid;
+  justify-items: center;
+}
+
+.hero__legende {
+  margin: -1rem 0 0;
+  color: var(--acier);
+  font-family: var(--police-code);
+  font-size: 0.85rem;
 }
 
 .bouton-secondaire {
@@ -75,140 +124,114 @@
   outline-offset: 3px;
 }
 
-.hero__faits {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+/* Ta mission */
+.mission__tete {
+  max-width: 44rem;
+}
+
+.mission__tete p {
+  margin: 0.9rem 0 0;
+  color: var(--acier);
+  font-size: 1.1rem;
+}
+
+.parcours {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
   margin: 2rem 0 0;
   padding: 0;
   list-style: none;
-  color: var(--acier);
-  font-size: 0.95rem;
 }
 
-.hero__faits li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.hero__faits li::before {
-  content: '';
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 2px;
-  background: var(--action);
-}
-
-/* Illustration réseau */
-.reseau {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.reseau__onde { fill: none; stroke: var(--trait); stroke-dasharray: 2 6; }
-.reseau__lien { stroke-width: 2; }
-.reseau__lien.is-ok { stroke: var(--action); stroke-dasharray: 5 7; animation: flux 1.2s linear infinite; }
-.reseau__lien.is-coupe { stroke: var(--alarme); stroke-dasharray: 3 9; opacity: 0.6; }
-.reseau__lien.is-alerte { stroke: var(--alarme); }
-.reseau__attaque { fill: none; stroke: var(--alarme); stroke-width: 2; stroke-dasharray: 6 6; animation: flux 0.9s linear infinite; }
-
-.reseau__noeud rect { fill: var(--facade); stroke: var(--trait-fort); stroke-width: 1.2; }
-.reseau__noeud.is-alerte rect { stroke: var(--alarme); }
-.reseau__nom { font-family: var(--police-titre); font-weight: 600; font-size: 16px; fill: var(--givre); }
-.reseau__statut { font-family: var(--police-texte); font-size: 12.5px; fill: var(--alarme); }
-.reseau__noeud.is-ok .reseau__statut { fill: var(--retabli); }
-
-.reseau__intrus rect { fill: var(--alarme-fond); stroke: var(--alarme); stroke-width: 1.2; stroke-dasharray: 4 3; }
-.reseau__ip { font-family: var(--police-code); font-size: 11px; fill: var(--alarme); }
-
-.reseau__coeur { fill: var(--baie); stroke: var(--alarme); stroke-width: 2; }
-.reseau__pulse {
-  fill: none;
-  stroke: var(--alarme);
-  stroke-width: 2;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pulse 2.4s ease-out infinite;
-}
-.reseau__ent-nom { font-family: var(--police-titre); font-weight: 700; font-size: 26px; fill: var(--givre); }
-.reseau__ent-statut { font-family: var(--police-texte); font-size: 12px; fill: var(--alarme); }
-
-/* Missions */
-.missions {
-  padding: clamp(2.5rem, 6vw, 4rem) 0;
-  border-top: 1px solid var(--trait);
-}
-
-.mission__statut {
-  margin: 0 0 0.6rem;
-  font-family: var(--police-code);
-  font-size: 0.8rem;
-  color: var(--acier);
-}
-
-.mission__statut.is-ouverte {
-  color: var(--retabli);
-}
-
-.mission-phare {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  overflow: hidden;
+.parcours__etape {
+  position: relative;
+  padding: 1.4rem 1.4rem 1.25rem;
   border: 1px solid var(--trait-fort);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--baie);
 }
 
-.mission-phare__illu {
+.parcours__etape + .parcours__etape::before {
+  content: '';
+  position: absolute;
+  top: 2.5rem;
+  left: -1.3rem;
+  width: 1.3rem;
+  height: 1.5px;
+  background: var(--trait-fort);
+}
+
+.parcours__num {
   display: grid;
   place-items: center;
-  padding: 2rem;
-  background: var(--ecran);
-  border-right: 1px solid var(--trait);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid var(--alarme);
+  border-radius: 6px;
+  color: var(--alarme);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
-.mission-phare__contenu {
-  padding: clamp(1.5rem, 4vw, 2.5rem);
+.parcours__module {
+  margin: 1rem 0 0.2rem;
+  color: var(--action);
+  font-family: var(--police-code);
+  font-size: 0.8rem;
 }
 
-.mission-phare h3 {
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+.parcours__etape h3 {
+  font-size: 1.3rem;
 }
 
-.mission-phare p {
-  max-width: 34rem;
-  color: var(--acier);
+.parcours__action {
+  margin: 0.5rem 0 1rem;
+  color: var(--givre);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1.25rem 0 1.75rem;
-  padding: 0;
-  list-style: none;
-}
-
-.tags li {
-  padding: 0.2rem 0.7rem;
+.parcours__competence {
+  display: inline-block;
+  margin: 0;
+  padding: 0.15rem 0.65rem;
   border: 1px solid var(--trait-fort);
   border-radius: 999px;
+  color: var(--acier);
   font-size: 0.85rem;
+}
+
+.objectif {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(61, 214, 245, 0.35);
+  border-radius: 12px;
+  background: rgba(61, 214, 245, 0.06);
+}
+
+.objectif__texte {
+  flex: 1 1 20rem;
+}
+
+.objectif h3 {
+  color: var(--action);
+  font-size: 1.2rem;
+}
+
+.objectif__texte p {
+  margin: 0.3rem 0 0;
   color: var(--givre);
 }
 
 .record {
   display: grid;
   grid-template-columns: repeat(4, auto);
-  justify-content: start;
-  gap: 0.5rem 1.75rem;
-  margin: -0.5rem 0 1.75rem;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--trait-fort);
-  border-radius: 10px;
-  background: var(--ecran);
+  gap: 0.25rem 1.5rem;
+  margin: 0;
 }
 
 .record dt {
@@ -228,120 +251,94 @@
 .record__rang.rang-A { color: var(--action); }
 .record__rang.rang-B { color: var(--retabli); }
 
-@media (max-width: 520px) {
-  .record {
-    grid-template-columns: repeat(2, auto);
-  }
+/* Règles */
+.regles h2 {
+  margin-bottom: 1.75rem;
 }
 
-.missions__a-venir {
+.regles__grille {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
 }
 
-.mission-verrouillee {
-  padding: 1.25rem 1.5rem 1.5rem;
-  border: 1px dashed var(--trait-fort);
-  border-radius: 10px;
+.regle {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.2rem;
+  border-left: 2px solid var(--trait-fort);
 }
 
-.mission-verrouillee__illu {
-  margin: 0 -0.5rem 1rem;
-  opacity: 0.7;
+.regle dt {
+  order: 2;
+  font-family: var(--police-titre);
+  font-weight: 600;
 }
 
-.mission-verrouillee h3 {
-  font-size: 1.25rem;
-  color: var(--acier);
+.regle__valeur {
+  order: 1;
+  margin: 0 0 0.2rem;
+  color: var(--action);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.6rem;
 }
 
-.mission-verrouillee p:last-child {
-  margin: 0.5rem 0 0;
+.regle__texte {
+  order: 3;
+  margin: 0.2rem 0 0;
   color: var(--acier);
   font-size: 0.95rem;
 }
 
-/* Illustrations des missions */
-.illu { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
-.mission-phare .illu { max-width: 420px; }
-.illu__chassis { fill: var(--baie); stroke: var(--trait-fort); }
-.illu__unite { fill: var(--facade); stroke: var(--trait-fort); }
-.illu__voyant { fill: var(--alarme); animation: clignote 1.1s steps(2, jump-none) infinite; }
-.illu__barre { fill: var(--trait-fort); }
-.illu__grille { stroke: var(--trait-fort); stroke-width: 2; stroke-linecap: round; }
-.illu__badge { fill: var(--alarme-fond); stroke: var(--alarme); }
-.illu__badge-texte { font-family: var(--police-code); font-size: 13px; fill: var(--alarme); }
+/* Prochaines missions : discret */
+.prochaines h2 {
+  font-size: 1.2rem;
+  color: var(--acier);
+}
+
+.prochaines ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prochaines li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--acier);
+}
+
+.prochaines__illu {
+  width: 72px;
+  opacity: 0.6;
+}
+
+.prochaines__statut {
+  padding: 0 0.5rem;
+  border: 1px dashed var(--trait-fort);
+  border-radius: 4px;
+  font-family: var(--police-code);
+  font-size: 0.75rem;
+}
+
+/* Illustrations des prochaines missions */
+.illu { display: block; width: 100%; height: auto; }
 .illu__onde { fill: none; stroke: var(--acier); stroke-width: 3; stroke-linecap: round; }
 .illu__onde.is-fantome { stroke-dasharray: 4 6; }
 .illu__point { fill: var(--acier); }
 .illu__point.is-fantome { fill: none; stroke: var(--acier); stroke-width: 2; }
-.illu__legende { font-family: var(--police-code); font-size: 11px; fill: var(--acier); }
+.illu__legende { display: none; }
 .illu__fichier { fill: var(--facade); stroke: var(--trait-fort); }
 .illu__pli { fill: none; stroke: var(--trait-fort); }
 .illu__anse { fill: none; stroke: var(--acier); stroke-width: 4; stroke-linecap: round; }
 .illu__cadenas { fill: var(--acier); }
 .illu__trou { fill: var(--baie); }
-
-/* Comment jouer */
-.comment-jouer {
-  padding: clamp(2.5rem, 6vw, 4rem) 0;
-  border-top: 1px solid var(--trait);
-}
-
-.etapes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: none;
-}
-
-.etape {
-  position: relative;
-  padding-top: 3.25rem;
-}
-
-.etape::before {
-  content: '';
-  position: absolute;
-  top: 1.1rem;
-  left: 2.75rem;
-  right: -2rem;
-  height: 1px;
-  background: var(--trait-fort);
-}
-
-.etape:last-child::before {
-  display: none;
-}
-
-.etape__num {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1.5px solid var(--action);
-  border-radius: 6px;
-  color: var(--action);
-  font-family: var(--police-titre);
-  font-weight: 700;
-}
-
-.etape h3 {
-  font-size: 1.2rem;
-}
-
-.etape p {
-  margin: 0.4rem 0 0;
-  color: var(--acier);
-}
 
 .pied {
   padding: 2rem 0 3rem;
@@ -354,43 +351,35 @@
   margin: 0;
 }
 
-@keyframes flux {
-  to { stroke-dashoffset: -24; }
-}
-
-@keyframes pulse {
-  from { transform: scale(1); opacity: 0.7; }
-  to { transform: scale(1.45); opacity: 0; }
-}
-
 @media (max-width: 900px) {
-  .hero,
-  .mission-phare {
-    grid-template-columns: 1fr;
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .mission-phare__illu {
-    border-right: none;
-    border-bottom: 1px solid var(--trait);
-  }
-}
-
-@media (max-width: 680px) {
-  .missions__a-venir,
-  .etapes {
-    grid-template-columns: 1fr;
+  .parcours,
+  .regles__grille {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .etape::before {
+  .parcours__etape + .parcours__etape::before {
     display: none;
   }
 }
 
+@media (min-width: 600px) and (max-width: 900px) {
+  .regles__grille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .record {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reseau__lien.is-ok,
-  .reseau__attaque,
-  .reseau__pulse,
-  .illu__voyant {
+  .hero__voyant {
     animation: none;
   }
 }

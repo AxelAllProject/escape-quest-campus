@@ -1,28 +1,43 @@
 import { useState } from 'react'
-import ReseauCampus from '../components/illustrations/ReseauCampus'
+import Datacenter3D from '../components/Datacenter3D'
+import { IllustrationRancon, IllustrationWifi } from '../components/illustrations/Missions'
 import { BADGES, formaterDuree, lireProgression } from '../game/partie'
-import { IllustrationPanne, IllustrationRancon, IllustrationWifi } from '../components/illustrations/Missions'
 import './Accueil.css'
 
-const A_VENIR = [
+// Les 3 épreuves, dans l'ordre : ce que le joueur doit faire, en clair.
+const EPREUVES = [
   {
-    id: 'wifi',
-    titre: 'Wi-Fi fantôme',
-    texte: "Un faux point d'accès imite le Wi-Fi du campus et intercepte les connexions.",
-    Illustration: IllustrationWifi,
+    module: 'Messagerie',
+    titre: 'Le mail piégé',
+    action: "Repère les 3 indices qui prouvent qu'un mail est du phishing.",
+    competence: 'Phishing',
   },
   {
-    id: 'rancon',
-    titre: 'Rançon à la bibliothèque',
-    texte: 'Les postes de la BU sont chiffrés. Retrouve la clé avant la fin des examens.',
-    Illustration: IllustrationRancon,
+    module: 'Réseau',
+    titre: 'Les services coupés',
+    action: 'Remets chaque service (web, SSH, DNS…) sur le bon port.',
+    competence: 'Ports réseau',
+  },
+  {
+    module: 'Journaux',
+    titre: "Les traces de l'intrus",
+    action: "Fouille les logs du serveur pour trouver la clé secrète de l'intrus.",
+    competence: 'Analyse de logs',
   },
 ]
 
-const ETAPES = [
-  { titre: 'Lis le briefing', texte: "Chaque mission commence par un incident réel : ce qui est tombé et depuis quand." },
-  { titre: 'Résous les épreuves', texte: 'Trois énigmes techniques, une à la fois. Un indice est disponible si tu bloques.' },
-  { titre: 'Rétablis le service', texte: 'Chaque épreuve réussie remet un module en ligne. Termine avant la fin du minuteur.' },
+const REGLES = [
+  { valeur: '10:00', titre: 'Minuteur', texte: 'Il démarre quand tu commences la mission.' },
+  { valeur: '+300', titre: 'Épreuve réussie', texte: '+50 en plus si tu réussis du premier coup.' },
+  { valeur: '−50', titre: 'Indice', texte: 'Deux indices par épreuve si tu bloques.' },
+  { valeur: '−25', titre: 'Erreur', texte: 'Chaque mauvaise réponse coûte des points.' },
+  { valeur: '+1/s', titre: 'Bonus de temps', texte: 'Chaque seconde restante à la fin compte.' },
+  { valeur: 'S A B C', titre: 'Rang', texte: `Ton rang final, et ${BADGES.length} badges à collectionner.` },
+]
+
+const PROCHAINES = [
+  { id: 'wifi', titre: 'Wi-Fi fantôme', Illustration: IllustrationWifi },
+  { id: 'rancon', titre: 'Rançon à la bibliothèque', Illustration: IllustrationRancon },
 ]
 
 export default function Accueil({ onLancer }) {
@@ -33,104 +48,118 @@ export default function Accueil({ onLancer }) {
     <div className="accueil">
       <section className="hero" aria-labelledby="hero-titre">
         <div className="hero__texte">
-          <h1 id="hero-titre">Reprends le contrôle du campus</h1>
+          <p className="hero__alerte">
+            <span className="hero__voyant" aria-hidden="true" />
+            Incident en cours sur le campus
+          </p>
+          <h1 id="hero-titre">
+            Le campus est hors ligne.
+            <span className="hero__sous-titre">Tu as 10 minutes pour le relancer.</span>
+          </h1>
           <p className="hero__lead">
-            Un escape game web où chaque énigme est un vrai réflexe d'informaticien : repérer un
-            phishing, remettre des services en ligne, lire des logs.
+            Un intrus a coupé l'ENT. Résous 3 épreuves de cybersécurité pour déverrouiller les 3 baies
+            serveur et remettre le campus en ligne.
           </p>
           <div className="hero__actions">
             <button type="button" className="bouton" onClick={onLancer}>
-              Lancer la mission 1
+              {record ? 'Rejouer et battre ton record' : 'Commencer la mission'}
             </button>
-            <a className="bouton-secondaire" href="#missions">
-              Voir les missions
+            <a className="bouton-secondaire" href="#comment-jouer">
+              Voir les règles
             </a>
           </div>
-          <ul className="hero__faits">
-            <li>10 minutes par mission</li>
-            <li>3 épreuves</li>
-            <li>Indices disponibles</li>
-          </ul>
         </div>
         <div className="hero__illustration">
-          <ReseauCampus />
+          <Datacenter3D />
+          <p className="hero__legende">1 baie verrouillée = 1 épreuve à réussir</p>
         </div>
       </section>
 
-      <section id="missions" className="missions" aria-labelledby="missions-titre">
-        <h2 id="missions-titre">Missions</h2>
-
-        <article className="mission-phare">
-          <div className="mission-phare__illu">
-            <IllustrationPanne />
-          </div>
-          <div className="mission-phare__contenu">
-            <p className="mission__statut is-ouverte">Mission 1, disponible</p>
-            <h3>Le campus est hors ligne</h3>
-            <p>
-              L'ENT ne répond plus depuis 8 h. Trouve par où l'attaquant est entré, remets les
-              services en route et récupère le code administrateur.
-            </p>
-            <ul className="tags" aria-label="Compétences">
-              <li>Phishing</li>
-              <li>Ports réseau</li>
-              <li>Analyse de logs</li>
-            </ul>
-            {record && (
-              <dl className="record">
-                <div>
-                  <dt>Ton record</dt>
-                  <dd>{record.score} pts</dd>
-                </div>
-                <div>
-                  <dt>Meilleur rang</dt>
-                  <dd className={`record__rang rang-${record.rang}`}>{record.rang}</dd>
-                </div>
-                <div>
-                  <dt>Temps</dt>
-                  <dd>{formaterDuree(record.temps)}</dd>
-                </div>
-                <div>
-                  <dt>Badges</dt>
-                  <dd>
-                    {progression.badges.length}/{BADGES.length}
-                  </dd>
-                </div>
-              </dl>
-            )}
-            <button type="button" className="bouton" onClick={onLancer}>
-              {record ? 'Rejouer et battre ton record' : 'Lancer la mission'}
-            </button>
-          </div>
-        </article>
-
-        <div className="missions__a-venir">
-          {A_VENIR.map(({ id, titre, texte, Illustration }) => (
-            <article key={id} className="mission-verrouillee" aria-label={`${titre} (bientôt disponible)`}>
-              <div className="mission-verrouillee__illu">
-                <Illustration />
-              </div>
-              <p className="mission__statut">Bientôt</p>
-              <h3>{titre}</h3>
-              <p>{texte}</p>
-            </article>
-          ))}
+      <section id="missions" className="mission" aria-labelledby="mission-titre">
+        <div className="mission__tete">
+          <h2 id="mission-titre">Ta mission</h2>
+          <p>
+            L'intrus est entré par la messagerie, a coupé les services du campus et s'est caché un accès
+            administrateur. Chaque épreuve réussie déverrouille une baie.
+          </p>
         </div>
-      </section>
 
-      <section id="comment-jouer" className="comment-jouer" aria-labelledby="comment-jouer-titre">
-        <h2 id="comment-jouer-titre">Comment jouer</h2>
-        <ol className="etapes">
-          {ETAPES.map((etape, i) => (
-            <li key={etape.titre} className="etape">
-              <span className="etape__num" aria-hidden="true">
+        <ol className="parcours">
+          {EPREUVES.map((epreuve, i) => (
+            <li key={epreuve.titre} className="parcours__etape">
+              <span className="parcours__num" aria-hidden="true">
                 {i + 1}
               </span>
-              <h3>{etape.titre}</h3>
-              <p>{etape.texte}</p>
+              <p className="parcours__module">Baie {epreuve.module.toLowerCase()}</p>
+              <h3>{epreuve.titre}</h3>
+              <p className="parcours__action">{epreuve.action}</p>
+              <p className="parcours__competence">{epreuve.competence}</p>
             </li>
           ))}
         </ol>
+
+        <div className="objectif">
+          <div className="objectif__texte">
+            <h3>Pour gagner</h3>
+            <p>
+              Déverrouille les 3 baies. Si tu finis avant la fin des 10 minutes, chaque seconde restante
+              rapporte des points.
+            </p>
+          </div>
+          {record && (
+            <dl className="record">
+              <div>
+                <dt>Ton record</dt>
+                <dd>{record.score} pts</dd>
+              </div>
+              <div>
+                <dt>Meilleur rang</dt>
+                <dd className={`record__rang rang-${record.rang}`}>{record.rang}</dd>
+              </div>
+              <div>
+                <dt>Temps</dt>
+                <dd>{formaterDuree(record.temps)}</dd>
+              </div>
+              <div>
+                <dt>Badges</dt>
+                <dd>
+                  {progression.badges.length}/{BADGES.length}
+                </dd>
+              </div>
+            </dl>
+          )}
+          <button type="button" className="bouton" onClick={onLancer}>
+            {record ? 'Rejouer la mission' : 'Commencer la mission'}
+          </button>
+        </div>
+      </section>
+
+      <section id="comment-jouer" className="regles" aria-labelledby="regles-titre">
+        <h2 id="regles-titre">Les règles</h2>
+        <dl className="regles__grille">
+          {REGLES.map((regle) => (
+            <div key={regle.titre} className="regle">
+              <dt>{regle.titre}</dt>
+              <dd className="regle__valeur">{regle.valeur}</dd>
+              <dd className="regle__texte">{regle.texte}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="prochaines" aria-labelledby="prochaines-titre">
+        <h2 id="prochaines-titre">Prochaines missions</h2>
+        <ul>
+          {PROCHAINES.map(({ id, titre, Illustration }) => (
+            <li key={id}>
+              <div className="prochaines__illu">
+                <Illustration />
+              </div>
+              <span>{titre}</span>
+              <span className="prochaines__statut">Bientôt</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer className="pied">
