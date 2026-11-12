@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
 import Navbar from './components/Navbar'
 import { MISSIONS, trouverMission } from './game/missions'
-import { badgesObtenus, bilan, enregistrerPartie, nouvellePartie, pointsEpreuve } from './game/partie'
+import { badgesObtenus, bilan, enregistrerPartie, lireProgression, nouvellePartie, pointsEpreuve } from './game/partie'
 import Accueil from './screens/Accueil'
 import Briefing from './screens/Briefing'
 import Epreuve from './screens/Epreuve'
 import Victoire from './screens/Victoire'
 import './App.css'
+
+// L'Arène embarque Three.js : on ne la télécharge que quand le joueur y entre.
+const Arene = lazy(() => import('./screens/Arene'))
 
 // Navigation entre les écrans et déroulement de la partie.
 export default function App() {
@@ -17,6 +20,18 @@ export default function App() {
   const [partie, setPartie] = useState(() => nouvellePartie(MISSIONS[0]))
   const [resultat, setResultat] = useState(null)
   const [maintenant, setMaintenant] = useState(() => Date.now())
+  // Easter egg : l'Arène. On retient l'écran d'où l'on vient pour y revenir,
+  // et les points cumulés (records de toutes les missions) qui donnent la puissance.
+  const [arene, setArene] = useState({ precedent: 'accueil', points: 0 })
+
+  const ouvrirArene = () => {
+    if (ecran === 'arene') return
+    setArene({
+      precedent: ecran,
+      points: MISSIONS.reduce((total, m) => total + (lireProgression(m.id).record?.score ?? 0), 0),
+    })
+    aller('arene')
+  }
 
   // Le minuteur avance une fois par seconde pendant les épreuves.
   useEffect(() => {
@@ -88,6 +103,7 @@ export default function App() {
         onAccueil={() => aller('accueil')}
         onMissions={() => allerSection('missions')}
         onCommentJouer={() => allerSection('comment-jouer')}
+        onBoss={ouvrirArene}
       />
       <main>
         {ecran === 'accueil' && <Accueil onLancer={ouvrirBriefing} />}
@@ -107,6 +123,11 @@ export default function App() {
             onIndice={() => modifierEpreuve(etape, (e) => ({ ...e, indices: e.indices + 1 }))}
             onSuivante={epreuveSuivante}
           />
+        )}
+        {ecran === 'arene' && (
+          <Suspense fallback={<p className="chargement-arene">Chargement de l'arène 3D…</p>}>
+            <Arene points={arene.points} onRetour={() => aller(arene.precedent)} />
+          </Suspense>
         )}
         {ecran === 'victoire' && resultat && (
           <Victoire

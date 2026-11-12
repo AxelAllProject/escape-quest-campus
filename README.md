@@ -1,6 +1,8 @@
 # 🔐 Escape Quest Campus
 
 Mini escape game web en 2 missions (10 et 12 min) : dans chacune, le joueur résout 3 épreuves de cybersécurité pour rétablir un service critique du campus.
+Easter egg : le bouton « Boss » de la barre de navigation ouvre l'Arène, un combat de boss en 3D (Three.js) et en temps réel contre le robot ROOT-KIT 9000 : on clique pour frapper (combo), on pare ses attaques avec des QTE aux flèches. Plus on a de points en mission, plus on frappe fort.
+
 Projet réalisé en Scrum dans le cadre du cours Agile & Scrum (CFP Baudimont).
 
 ## Stack

@@ -87,6 +87,53 @@
 .logo__unite { fill: var(--acier); }
 .logo__voyant { fill: var(--alarme); }
 
+/* Bouton d'accès dans la barre de navigation */
+.navbar .navbar__boss {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.45rem;
+  border: 1px solid rgba(242, 71, 78, 0.45);
+  border-radius: 999px;
+  background: rgba(242, 71, 78, 0.08);
+  color: #ff8a8f;
+  font-family: var(--police-code);
+  font-size: 0.78rem;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.navbar .navbar__boss:hover {
+  background: rgba(242, 71, 78, 0.18);
+  box-shadow: 0 0 16px rgba(242, 71, 78, 0.35);
+}
+
+.navbar__boss svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.navbar__boss-oeil {
+  fill: currentColor;
+  animation: clignote 1.2s steps(2, jump-none) infinite;
+}
+
+@media (max-width: 480px) {
+  .navbar__boss-texte {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__boss-oeil {
+    animation: none;
+  }
+}
+
 @media (max-width: 760px) {
   .navbar__liens {
     display: none;
