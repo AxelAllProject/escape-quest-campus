@@ -75,11 +75,6 @@
   margin-top: 2rem;
 }
 
-.victoire__actions .bouton-secondaire {
-  background: none;
-  cursor: pointer;
-}
-
 .certificat {
   --rang: var(--acier);
   display: grid;

@@ -241,7 +241,8 @@
   height: 460px;
   transform: scale(0.6);
   transform-origin: top center;
-  margin: 0 -100px calc(-0.4 * 460px);
+  /* la scène réduite laisse un vide sous les baies : on le récupère */
+  margin: 0 -100px calc(-0.4 * 460px - 48px);
 }
 
 /* Sur petit écran, on réduit toute la scène (et la place qu'elle occupe) */

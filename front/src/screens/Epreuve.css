@@ -8,7 +8,7 @@
   padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
 }
 
-/* Progression : 3 cases reliées */
+/* Progression : 3 étapes reliées, avec le nom du module */
 .progression {
   display: flex;
   align-items: center;
@@ -17,40 +17,67 @@
   list-style: none;
 }
 
+.progression__etape {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--acier);
+}
+
+.progression__etape + .progression__etape::before {
+  content: '';
+  width: clamp(1.25rem, 4vw, 2.75rem);
+  height: 2px;
+  margin: 0 0.75rem;
+  border-radius: 2px;
+  background: var(--trait-fort);
+}
+
+.progression__etape.is-fait + .progression__etape::before {
+  background: linear-gradient(90deg, var(--retabli), var(--trait-fort));
+}
+
 .progression__pas {
   display: grid;
   place-items: center;
   width: 2rem;
   height: 2rem;
   border: 1.5px solid var(--trait-fort);
-  border-radius: 6px;
-  color: var(--acier);
+  border-radius: 7px;
   font-family: var(--police-titre);
   font-weight: 700;
   font-size: 0.95rem;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
-.progression__pas + .progression__pas {
-  margin-left: 2.75rem;
-  position: relative;
+.progression__pas svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.progression__pas + .progression__pas::before {
-  content: '';
-  position: absolute;
-  right: calc(100% + 0.4rem);
-  width: 2rem;
-  height: 1.5px;
-  background: var(--trait-fort);
+.progression__nom {
+  font-family: var(--police-code);
+  font-size: 0.8rem;
+  text-transform: lowercase;
 }
 
-.progression__pas.is-actuel {
-  border-color: var(--action);
+.progression__etape.is-actuel {
   color: var(--action);
-  box-shadow: 0 0 0 4px rgba(61, 214, 245, 0.12);
 }
 
-.progression__pas.is-fait {
+.progression__etape.is-actuel .progression__pas {
+  border-color: var(--action);
+  box-shadow: 0 0 0 4px rgba(61, 214, 245, 0.14), 0 0 18px rgba(61, 214, 245, 0.25);
+}
+
+.progression__etape.is-fait {
+  color: var(--retabli);
+}
+
+.progression__etape.is-fait .progression__pas {
   border-color: var(--retabli);
   background: var(--retabli);
   color: var(--nuit);
@@ -196,28 +223,97 @@
 .indices {
   margin-top: 1.5rem;
   padding: 1rem 1.1rem;
-  border: 1px dashed var(--trait-fort);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 181, 71, 0.22);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 181, 71, 0.06), rgba(255, 181, 71, 0.01));
+}
+
+.indices__tete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.indices__icone {
+  flex: none;
+  padding: 0.45rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: rgba(255, 181, 71, 0.12);
+  fill: none;
+  stroke: var(--ambre);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.indices__texte {
+  flex: 1 1 14rem;
+}
+
+.indices__titre {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 700;
+}
+
+.indices__cout {
+  margin: 0;
+  color: var(--acier);
+  font-size: 0.88rem;
+}
+
+.indices .indices__bouton {
+  padding: 0.6rem 1.1rem;
+  border-color: rgba(255, 181, 71, 0.45);
+  color: var(--ambre);
+  font-size: 0.98rem;
+}
+
+.indices .indices__bouton:hover:not(:disabled) {
+  border-color: var(--ambre);
+  background: rgba(255, 181, 71, 0.1);
 }
 
 .indices__liste {
-  margin: 0 0 1rem;
-  padding-left: 1.25rem;
-  color: var(--ambre);
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: indice;
 }
 
-.indices__liste li + li {
-  margin-top: 0.4rem;
+.indices__liste li {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(10, 20, 34, 0.6);
+  color: var(--givre);
+  animation: indice-entree 0.35s ease-out;
 }
 
-.indices .bouton-secondaire {
-  background: none;
-  cursor: pointer;
+.indices__liste li::before {
+  counter-increment: indice;
+  content: counter(indice);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--ambre);
+  color: var(--nuit);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.8rem;
 }
 
-.indices .bouton-secondaire:disabled {
-  color: var(--acier);
-  cursor: not-allowed;
+@keyframes indice-entree {
+  from { opacity: 0; transform: translateY(-4px); }
 }
 
 /* Entrée du panneau de l'épreuve, en perspective */
@@ -265,8 +361,27 @@
   text-shadow: none;
 }
 
+.minuteur__jauge {
+  height: 4px;
+  margin: 0.6rem 0.2rem 0;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--trait);
+}
+
+.minuteur__jauge span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--alarme), var(--ambre));
+  transform: scaleX(var(--part, 1));
+  transform-origin: left;
+  transition: transform 1s linear;
+}
+
 .minuteur__legende {
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
   color: var(--acier);
   font-size: 0.78rem;
 }
@@ -327,12 +442,6 @@
   text-align: center;
 }
 
-.bouton:disabled {
-  background: var(--trait-fort);
-  color: var(--acier);
-  cursor: not-allowed;
-}
-
 @media (max-width: 900px) {
   .epreuve {
     grid-template-columns: minmax(0, 1fr);
@@ -389,6 +498,17 @@
   .reussite__suite {
     grid-column: 1 / -1;
   }
+
+  .minuteur__jauge {
+    margin-top: 0.4rem;
+  }
+}
+
+/* Mobile : on ne garde le nom que de l'étape en cours */
+@media (max-width: 560px) {
+  .progression__etape:not(.is-actuel) .progression__nom {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -416,7 +536,8 @@
 @media (prefers-reduced-motion: reduce) {
   .epreuve__jeu,
   .minuteur.is-urgent .minuteur__valeur,
-  .reussite {
+  .reussite,
+  .indices__liste li {
     animation: none;
   }
 
