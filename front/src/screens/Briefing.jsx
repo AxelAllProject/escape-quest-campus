@@ -33,6 +33,7 @@ export default function Briefing({ mission, onStart }) {
         <div className="briefing__action">
           <button type="button" className="bouton" onClick={onStart}>
             Commencer la mission
+            <span className="bouton__fleche" aria-hidden="true">→</span>
           </button>
           <p className="briefing__note">
             {mission.duree / 60} minutes, {mission.epreuves.length} épreuves, des indices si tu bloques.

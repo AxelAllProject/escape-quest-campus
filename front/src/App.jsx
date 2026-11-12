@@ -105,7 +105,7 @@ export default function App() {
         onCommentJouer={() => allerSection('comment-jouer')}
         onBoss={ouvrirArene}
       />
-      <main>
+      <main className="ecran" key={ecran}>
         {ecran === 'accueil' && <Accueil onLancer={ouvrirBriefing} />}
         {ecran === 'briefing' && <Briefing mission={mission} onStart={commencer} />}
         {ecran === 'epreuve' && (

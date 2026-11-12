@@ -8,15 +8,16 @@ export default function Navbar({ reseauRetabli, onAccueil, onMissions, onComment
       <div className="navbar__interieur">
         <button type="button" className="navbar__marque" onClick={onAccueil}>
           <Logo />
-          <span>Escape Quest Campus</span>
+          <span className="navbar__nom">Escape Quest Campus</span>
         </button>
 
         <nav aria-label="Navigation principale" className="navbar__liens">
           <button type="button" onClick={onMissions}>
             Missions
           </button>
-          <button type="button" onClick={onCommentJouer}>
-            Comment jouer
+          <button type="button" onClick={onCommentJouer} aria-label="Comment jouer">
+            <span className="navbar__long">Comment jouer</span>
+            <span className="navbar__court">Règles</span>
           </button>
         </nav>
 

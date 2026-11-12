@@ -113,9 +113,19 @@ export default function Epreuve({
           {etats.map((e, i) => (
             <li
               key={i}
-              className={`progression__pas${e === 'retabli' ? ' is-fait' : ''}${i === numero - 1 ? ' is-actuel' : ''}`}
+              className={`progression__etape${e === 'retabli' ? ' is-fait' : ''}${i === numero - 1 ? ' is-actuel' : ''}`}
+              aria-current={i === numero - 1 ? 'step' : undefined}
             >
-              {i + 1}
+              <span className="progression__pas">
+                {e === 'retabli' ? (
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-label="rétabli">
+                    <path d="M3 8.5l3.2 3.2L13 5" />
+                  </svg>
+                ) : (
+                  i + 1
+                )}
+              </span>
+              <span className="progression__nom">{mission.modules[i]?.nom}</span>
             </li>
           ))}
         </ol>
@@ -167,6 +177,7 @@ export default function Epreuve({
                   </div>
                   <button type="button" className="bouton reussite__suite" onClick={onSuivante}>
                     {numero < total ? 'Épreuve suivante' : "Clore l'incident"}
+                    <span className="bouton__fleche" aria-hidden="true">→</span>
                   </button>
                 </div>
               )}
@@ -174,6 +185,27 @@ export default function Epreuve({
 
             {!reussie && epreuve.hints > 0 && (
               <div className="indices">
+                <div className="indices__tete">
+                  <svg className="indices__icone" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                    <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" />
+                  </svg>
+                  <div className="indices__texte">
+                    <p className="indices__titre">Besoin d'un coup de pouce ?</p>
+                    <p className="indices__cout">
+                      {indicesRestants > 0
+                        ? `−50 pts par indice · ${indicesRestants} restant${indicesRestants > 1 ? 's' : ''}`
+                        : 'Tous les indices de cette épreuve sont révélés.'}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="bouton-secondaire indices__bouton"
+                    disabled={indicesRestants === 0}
+                    onClick={demanderIndice}
+                  >
+                    {indicesRestants > 0 ? 'Révéler un indice' : 'Plus d’indice'}
+                  </button>
+                </div>
                 {indices.length > 0 && (
                   <ol className="indices__liste" aria-label="Indices obtenus">
                     {indices.map((indice) => (
@@ -181,16 +213,6 @@ export default function Epreuve({
                     ))}
                   </ol>
                 )}
-                <button
-                  type="button"
-                  className="bouton-secondaire"
-                  disabled={indicesRestants === 0}
-                  onClick={demanderIndice}
-                >
-                  {indicesRestants > 0
-                    ? `Demander un indice (−50 pts, ${indicesRestants} restant${indicesRestants > 1 ? 's' : ''})`
-                    : 'Plus aucun indice disponible'}
-                </button>
               </div>
             )}
           </>
@@ -202,6 +224,9 @@ export default function Epreuve({
           <p className="minuteur__valeur" role="timer" aria-label={`Temps restant : ${formaterDuree(restantes)}`}>
             {formaterDuree(restantes)}
           </p>
+          <div className="minuteur__jauge" aria-hidden="true">
+            <span style={{ '--part': mission.duree ? restantes / mission.duree : 0 }} />
+          </div>
           <p className="minuteur__legende">
             {restantes > 0 ? mission.legendeMinuteur : 'temps écoulé : plus de bonus'}
           </p>

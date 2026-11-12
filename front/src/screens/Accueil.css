@@ -102,29 +102,6 @@
   font-size: 0.85rem;
 }
 
-.bouton-secondaire {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.85rem 1.4rem;
-  border: 1px solid var(--trait-fort);
-  border-radius: 6px;
-  color: var(--givre);
-  font-family: var(--police-titre);
-  font-weight: 600;
-  font-size: 1.05rem;
-  text-decoration: none;
-  transition: border-color 0.15s;
-}
-
-.bouton-secondaire:hover {
-  border-color: var(--acier);
-}
-
-.bouton-secondaire:focus-visible {
-  outline: 3px solid var(--action);
-  outline-offset: 3px;
-}
-
 /* Entrée du hero : une seule séquence au chargement */
 .hero__texte > * {
   animation: entree 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) both;

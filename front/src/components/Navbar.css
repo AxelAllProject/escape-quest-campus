@@ -47,13 +47,38 @@
 }
 
 .navbar__liens button {
+  position: relative;
   padding: 0.25rem 0;
   color: var(--acier);
   font-size: 0.98rem;
+  transition: color 0.15s;
+}
+
+/* Soulignement qui se trace au survol */
+.navbar__liens button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--action);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease-out;
 }
 
 .navbar__liens button:hover {
   color: var(--givre);
+}
+
+.navbar__liens button:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar__court {
+  display: none;
 }
 
 .navbar__etat {
@@ -134,14 +159,41 @@
   }
 }
 
+/* Petit écran : les liens restent accessibles, en version courte */
 @media (max-width: 760px) {
+  .navbar__interieur {
+    gap: 1.1rem;
+  }
+
   .navbar__liens {
+    gap: 1.1rem;
+  }
+
+  .navbar__liens button {
+    font-size: 0.92rem;
+  }
+
+  .navbar__long {
     display: none;
+  }
+
+  .navbar__court {
+    display: inline;
   }
 }
 
 @media (max-width: 480px) {
   .navbar__etat {
+    display: none;
+  }
+
+  .navbar__liens {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar__nom {
     display: none;
   }
 }

@@ -175,6 +175,7 @@ export default function Accueil({ onLancer }) {
             )}
             <button type="button" className="bouton" onClick={() => onLancer(mission.id)}>
               {record ? `Rejouer la mission ${mission.id}` : `Lancer la mission ${mission.id}`}
+              <span className="bouton__fleche" aria-hidden="true">→</span>
             </button>
           </div>
         </div>
